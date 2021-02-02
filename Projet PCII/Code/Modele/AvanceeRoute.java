@@ -3,7 +3,7 @@ package Modele;
 public class AvanceeRoute extends Thread{
 	
 	/****************CONSTANTES****************/
-	public final static int secondeAvancee = 400;
+	public final static int secondeAvancee = 300;
 	
 	/****************ATTRIBUTS****************/
 	private Route route;
