@@ -3,7 +3,7 @@ package Modele;
 public class AvanceeRoute extends Thread{
 	
 	/****************CONSTANTES****************/
-	public final static int secondeAvancee = 300;
+	public final static int secondeAvancee = 200;
 	
 	/****************ATTRIBUTS****************/
 	private Route route;
@@ -24,9 +24,10 @@ public class AvanceeRoute extends Thread{
 	public void run() {
 		while(this.getRun()) { //boucle infinie
 			try {
-				this.getRoute().avanceRoute();
-				this.getRoute().removePointInvisible();
-				this.getRoute().addPointInvisible();
+				route.avanceRoute();
+				route.removePointInvisible();
+				route.addPointInvisible();
+				route.updateVitesseMoto();
 				
 				Thread.sleep(secondeAvancee); //on renouvelle toutes les 'secondes'
 			} catch (InterruptedException e) {

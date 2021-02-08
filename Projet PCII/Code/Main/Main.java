@@ -18,7 +18,7 @@ public class Main {
 		JFrame fenetre = new JFrame("Course de moto");
 
 		Moto moto = new Moto();
-		Route route = new Route();
+		Route route = new Route(moto);
 		
 		AffichageJeu affichageJeu = new AffichageJeu(moto, route);
 		fenetre.add(affichageJeu);

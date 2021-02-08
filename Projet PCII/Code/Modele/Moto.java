@@ -9,12 +9,14 @@ public class Moto {
 	/****************ATTRIBUTS****************/
 	private int positionX;
 	private int positionY;
+	private float vitesse;
 	
 	
 	/****************CONSTRUCTEUR****************/
 	public Moto() {
 		this.positionX = POSITIONXMOTO;
-		this.positionY = Vue.AffichageJeu.HAUTAFFICHAGE - 10;
+		this.positionY = Vue.AffichageJeu.HAUTAFFICHAGE - 20;
+		this.vitesse = 80;
 		System.out.printf("POSITIONXMOTO = %d\n", POSITIONXMOTO);
 		System.out.printf("positionY = %d\n", this.positionY);
 	}
@@ -22,10 +24,11 @@ public class Moto {
 	/****************METHODES****************/
 	public int getPositionX() { return positionX; }
 	public int getPositionY() { return positionY; }
-	
+	public float getVitesse() { return vitesse; }
+
 	public void setPositionX(int positionX) { this.positionX = positionX; }
 	public void setPositionY(int positionY) { this.positionY = positionY; }
-	
+	public void setVitesse(float vitesse) { this.vitesse = vitesse; }
 	
 	/**
 	 * methode deplaceDroit() :
@@ -51,6 +54,8 @@ public class Moto {
 			System.out.printf("La moto va sortir de l'ecran\n");
 		}
 	}
+
+
 
 	
 }
