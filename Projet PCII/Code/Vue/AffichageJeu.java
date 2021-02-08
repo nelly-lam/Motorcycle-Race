@@ -1,9 +1,11 @@
 package Vue;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Modele.Moto;
@@ -20,7 +22,6 @@ public class AffichageJeu extends JPanel{
     /*************ATTRIBUTS*************/
     private Moto moto;
     private Route route;
-
     
     
     /*************CONSTRUCTEUR*************/
@@ -28,6 +29,8 @@ public class AffichageJeu extends JPanel{
     	this.moto = m;
     	this.route = r;
         setPreferredSize(new Dimension(LARGAFFICHAGE, HAUTAFFICHAGE));
+        JLabel kilometre = new JLabel("Kilometre");
+        this.add(kilometre, BorderLayout.PAGE_END);
     }
     
     

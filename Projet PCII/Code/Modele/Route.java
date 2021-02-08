@@ -137,7 +137,7 @@ public class Route {
 	
 	/**
 	 * methode avanceRoute() :
-	 * modifie les listes listesPointsG et listesPointsG
+	 * modifie les listes listesPointsG et listesPointsG en incrementant leur ordonnee
 	 */
 	public void avanceRoute() {
 		int x;
@@ -196,16 +196,12 @@ public class Route {
 			//a chaque creation d'ordonnee, on decremente
 			int yG = (int) this.getListePointsG().get(this.getListePointsG().size()-1).getY();
 			yG = yG - r.nextInt(HAUTEURMAXROUTE) - HAUTEURMINROUTE;
-			//Point newPointG = new Point(xG, yG);
-			//this.setPointAtG(this.getListePointsG().size()-1, newPointG);
 			this.listePointsG.add(new Point(xG, yG));
 			
 			//affiche_listePoints();
 			
 			int xD = (int) (this.getListePointsG().get(this.getListePointsG().size()-1).getX() + LARGEURMAXROUTE + 80);
 			int yD = (int) this.getListePointsG().get(this.getListePointsG().size()-1).getY();
-			//Point newPointD = new Point(xD, yD);
-			//this.setPointAtD(this.getListePointsD().size()-1, newPointD);
 			this.listePointsD.add(new Point(xD, yD));
 
 			/*
@@ -250,18 +246,24 @@ public class Route {
 	public float abscisseNiveauMotoG() {
 		int i = 0;
 		int indice = 0;
+		
 		while(this.getListePointsG().get(i).getY() < this.getMoto().getPositionY()) {
-			indice = i;
+			indice = i; //indice du Point dont l'ordonnee est inferieure a la moto et le plus proche
 			i++;
 		}
+		
+		/* recuperation des Points les plus proches de la moto
+		 * p1 le Point en dessous, p2 le Point au dessus
+		 */
 		Point p1 = new Point(this.getListePointsG().get(indice));
 		Point p2 = new Point(this.getListePointsG().get(indice+1));
 		
+		/*coefficient du segment au niveau de la moto*/
 		float coef = (float) ( (p2.getY() - p1.getY())
 					/ (float) (p2.getX() - (float) p1.getX()) );
 		
+		//abscisse situee sur le segmentG et dont l'ordonnee correspond a la positionY de la moto
 		float result = (this.getMoto().getPositionY() - Moto.POSITIONXMOTO) / coef;
-		//float result = (float) (p1.getY() - (coef * (p1.getX() - Moto.POSITIONXMOTO)));
 		return result;
 	}
 	
@@ -275,17 +277,22 @@ public class Route {
 		int i = 0;
 		int indice = 0;
 		while(this.getListePointsD().get(i).getY() < this.getMoto().getPositionY()) {
-			indice = i;
+			indice = i; //indice du Point dont l'ordonnee est inferieure a la moto et le plus proche
 			i++;
 		}
+		
+		/* recuperation des Points les plus proches de la moto
+		 * p1 le Point en dessous, p2 le Point au dessus
+		 */
 		Point p1 = new Point(this.getListePointsD().get(indice));
 		Point p2 = new Point(this.getListePointsD().get(indice+1));
 		
+		/*coefficient du segment au niveau de la moto*/
 		float coef = (float) ( (p2.getY() - p1.getY())
 					/ (float) (p2.getX() - (float) p1.getX()) );
 		
+		//abscisse situee sur le segmentD et dont l'ordonnee correspond a la positionY de la moto
 		float result = (this.getMoto().getPositionY() - Moto.POSITIONXMOTO) / coef;
-		//float result = (float) (p1.getY() - (coef * (p1.getX() - Moto.POSITIONXMOTO)));
 		return result;
 	}
 	
