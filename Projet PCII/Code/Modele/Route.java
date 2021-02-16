@@ -49,8 +49,8 @@ public class Route {
 		
 		
 		///////////////////////////INITIALISATION DES POINTS DE LA LIGNE COTE DROIT/////////////////////////////////
-		int xG = (int) (departG.getX());
-		int yG = (int) (departG.getY());
+		int xG = (departG.x);
+		int yG = (departG.y);
 		Random r = new Random();
 		
 		//int profondeur = 0;
@@ -62,6 +62,7 @@ public class Route {
 			Point newPoint = new Point(xG, yG);
 			listePointsG.add(newPoint);
 		}
+		
 		
 		/*
 		if(this.getListePointsG().get(this.getListePointsG().size()-1).getY() < POSITIONHORIZON) {
@@ -77,8 +78,8 @@ public class Route {
 		int yD = 0;
 		
 		for(int i = 0; i < this.getListePointsG().size(); i++) {
-			xD = (int) (this.getListePointsG().get(i).getX() + LARGEURMAXROUTE + 80);
-			yD = (int) this.getListePointsG().get(i).getY();
+			xD = (this.getListePointsG().get(i).x + LARGEURMAXROUTE + 80);
+			yD = this.getListePointsG().get(i).y;
 			Point newPoint = new Point(xD, yD);
 			this.getListePointsD().add(newPoint);
 		}
@@ -95,6 +96,12 @@ public class Route {
 	public int getKilometre() { return kilometre; }
 	public int getHorizon() { return horizon; }
 	public Moto getMoto() { return moto; }
+	/**
+	 * methode getPoint() : renvoie le Point situe a l'indice i de l'ArrayList listePoints
+	 * @param i un indice int
+	 * @return Point
+	 */
+	public Point getPointG(int i) { return this.listePointsG.get(i); }
 	
 	public void setListePointsG(ArrayList<Point> listePoints) { this.listePointsG = listePoints; }
 	public void setListePointsD(ArrayList<Point> listePointsParallele) { 
@@ -129,8 +136,8 @@ public class Route {
 	 */
 	public void affiche_listePoints() {
 		for (int i = 0; i < this.getListePointsG().size(); i++) {
-			System.out.printf("Point %d = (%f, %f)\n", i, this.getListePointsG().get(i).getX(), 
-															this.getListePointsG().get(i).getY());
+			System.out.printf("Point %d = (%d, %d)\n", i, this.getListePointsG().get(i).x, 
+															this.getListePointsG().get(i).y);
 		}
 	}
 	
@@ -145,18 +152,18 @@ public class Route {
 		
 		//deplacement des points de la ligne gauche
 		ArrayList<Point> newListeG = new ArrayList<Point>();
-		for(int i = 0; i < this.getListePointsG().size()-1; i++) {
-			x = (int) (this.getListePointsG().get(i).getX());
-			y = (int) (this.getListePointsG().get(i).getY() + TAILLEAVANCEE);
+		for(int i = 0; i < this.getListePointsG().size(); i++) {
+			x = (int) (this.getListePointsG().get(i).x);
+			y = (int) (this.getListePointsG().get(i).y + TAILLEAVANCEE);
 			newListeG.add(new Point(x, y));
 		}
 		this.setListePointsG(newListeG);
 		
 		//deplacement des points de la ligne droite
 		ArrayList<Point> newListeD = new ArrayList<Point>();
-		for(int i = 0; i < this.getListePointsD().size()-1; i++) {
-			x = (int) (this.getListePointsD().get(i).getX());
-			y = (int) (this.getListePointsD().get(i).getY() + TAILLEAVANCEE);
+		for(int i = 0; i < this.getListePointsD().size(); i++) {
+			x = (int) (this.getListePointsD().get(i).x);
+			y = (int) (this.getListePointsD().get(i).y + TAILLEAVANCEE);
 			newListeD.add(new Point(x, y));
 		}
 		this.setListePointsD(newListeD);
@@ -172,8 +179,8 @@ public class Route {
 	 */
 	public void removePointInvisible() {
 		//si le premier Point et le deuxieme Point sont en dehors de l'affichage
-		if(this.getListePointsG().get(0).getY() > Vue.AffichageJeu.HAUTAFFICHAGE && 
-				this.getListePointsG().get(1).getY() > Vue.AffichageJeu.HAUTAFFICHAGE) {
+		if(this.getListePointsG().get(0).y > Vue.AffichageJeu.HAUTAFFICHAGE && 
+				this.getListePointsG().get(1).y > Vue.AffichageJeu.HAUTAFFICHAGE) {
 			//on retire le premier Point de la listePoints
 			this.getListePointsG().remove(0);
 			this.getListePointsD().remove(0);
@@ -187,21 +194,23 @@ public class Route {
 	 */
 	public void addPointInvisible() {
 		
-		//si l'ordonnee du dernier Point de listePointsG est superieure a 0
-		if((int) this.getListePointsG().get(this.getListePointsG().size()-1).getY() > 0) {
+		//si l'ordonnee du dernier Point de listePointsG est superieure a -30
+		if(this.getListePointsG().get(this.getListePointsG().size()-1).y > -30) {
 			
 			Random r = new Random();
 			int xG = r.nextInt(plageLargeurRoute) + bordureMinX;
 			
 			//a chaque creation d'ordonnee, on decremente
-			int yG = (int) this.getListePointsG().get(this.getListePointsG().size()-1).getY();
+			//int yG = (int) this.getListePointsG().get(this.getListePointsG().size()-1).getY();
+			int yG = this.getPointG(this.getListePointsG().size()-1).y;
 			yG = yG - r.nextInt(HAUTEURMAXROUTE) - HAUTEURMINROUTE;
+			System.out.printf("ordonnee cree : %d\n", yG);
 			this.listePointsG.add(new Point(xG, yG));
 			
 			//affiche_listePoints();
 			
-			int xD = (int) (this.getListePointsG().get(this.getListePointsG().size()-1).getX() + LARGEURMAXROUTE + 80);
-			int yD = (int) this.getListePointsG().get(this.getListePointsG().size()-1).getY();
+			int xD = (this.getListePointsG().get(this.getListePointsG().size()-1).x + LARGEURMAXROUTE + 80);
+			int yD = this.getListePointsG().get(this.getListePointsG().size()-1).y;
 			this.listePointsD.add(new Point(xD, yD));
 
 			/*
@@ -213,6 +222,42 @@ public class Route {
 			System.out.printf("Dernier point = (%f, %f)\n", this.getListePointsG().get(last).getX(), 
 					this.getListePointsG().get(last).getY());
 			*/
+		}
+	}
+	
+	
+	
+	/**
+	 * methode addPointInvisible() : modifie la listePoints en ajoutant un Point de coordonnee aleatoire
+	 * a la fin, si le dernier Point a une ordonnee superieure a l'horizon
+	 */
+	public void addPointInvisible2() {
+
+		//si l'ordonnee du dernier Point de listePointsG est superieure a -30
+		if(this.getListePointsG().get(this.getListePointsG().size()-1).y > POSITIONHORIZON) {
+			System.out.printf("y : %d\n", this.getListePointsG().get(this.getListePointsG().size()-1).y);
+
+			
+			Random r = new Random();
+			int xG = r.nextInt(plageLargeurRoute) + bordureMinX;
+			
+			//a chaque creation d'ordonnee, on decremente
+			//int yG = (int) this.getListePointsG().get(this.getListePointsG().size()-1).getY();
+			int yG = this.getPointG(this.getListePointsG().size()-1).y;
+			//yG = yG - r.nextInt(HAUTEURMAXROUTE) - HAUTEURMINROUTE;
+			yG =  1;
+			System.out.printf("ordonnee before : %d\n", this.getListePointsG().size());
+
+			this.listePointsG.add(new Point(xG, yG));
+			System.out.printf("ordonnee after : %d\n", this.getListePointsG().size());
+
+			//affiche_listePoints();
+			
+			int yD = yG;
+			//this.getListePointsG().get(this.getListePointsG().size()-1).y;
+			this.listePointsD.add(new Point(xG+200, yD));
+			//System.out.printf("ordonnee cree : %d\n", this.getListePointsG().size());
+
 		}
 	}
 	
@@ -231,7 +276,7 @@ public class Route {
 	 */
 	public boolean isBetween(Point p1, Point p2) {
         if(( p1.getX() <= this.getMoto().getPositionX())
-        		&& this.getMoto().getPositionX() < p2.getX()) {
+        		&& this.getMoto().getPositionX() < p2.x) {
         	return true;
         }
         return false;
@@ -247,7 +292,7 @@ public class Route {
 		int i = 0;
 		int indice = 0;
 		
-		while(this.getListePointsG().get(i).getY() < this.getMoto().getPositionY()) {
+		while(this.getListePointsG().get(i).y < this.getMoto().getPositionY()) {
 			indice = i; //indice du Point dont l'ordonnee est inferieure a la moto et le plus proche
 			i++;
 		}
@@ -259,8 +304,8 @@ public class Route {
 		Point p2 = new Point(this.getListePointsG().get(indice+1));
 		
 		/*coefficient du segment au niveau de la moto*/
-		float coef = (float) ( (p2.getY() - p1.getY())
-					/ (float) (p2.getX() - (float) p1.getX()) );
+		float coef = (float) ( (p2.y - p1.y)
+					/ (float) (p2.x - (float) p1.x) );
 		
 		//abscisse situee sur le segmentG et dont l'ordonnee correspond a la positionY de la moto
 		float result = (this.getMoto().getPositionY() - Moto.POSITIONXMOTO) / coef;
@@ -276,7 +321,7 @@ public class Route {
 	public float abscisseNiveauMotoD() {
 		int i = 0;
 		int indice = 0;
-		while(this.getListePointsD().get(i).getY() < this.getMoto().getPositionY()) {
+		while(this.getListePointsD().get(i).y < this.getMoto().getPositionY()) {
 			indice = i; //indice du Point dont l'ordonnee est inferieure a la moto et le plus proche
 			i++;
 		}
@@ -288,8 +333,8 @@ public class Route {
 		Point p2 = new Point(this.getListePointsD().get(indice+1));
 		
 		/*coefficient du segment au niveau de la moto*/
-		float coef = (float) ( (p2.getY() - p1.getY())
-					/ (float) (p2.getX() - (float) p1.getX()) );
+		float coef = (float) ( (p2.y - p1.y)
+					/ (float) (p2.x - (float) p1.x) );
 		
 		//abscisse situee sur le segmentD et dont l'ordonnee correspond a la positionY de la moto
 		float result = (this.getMoto().getPositionY() - Moto.POSITIONXMOTO) / coef;

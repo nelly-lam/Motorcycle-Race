@@ -53,8 +53,8 @@ public class AffichageJeu extends JPanel{
     }
     
     public void paintMoto(Graphics g) {
-    	g.setColor(Color.orange);
-    	g.drawString("+", this.getMoto().getPositionX(), this.getMoto().getPositionY());
+    	g.setColor(Color.RED);
+    	g.drawString("X", this.getMoto().getPositionX(), this.getMoto().getPositionY());
     }
     
     public void paintRoute(Graphics g) {

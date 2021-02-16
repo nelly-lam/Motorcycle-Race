@@ -25,8 +25,8 @@ public class AvanceeRoute extends Thread{
 		while(this.getRun()) { //boucle infinie
 			try {
 				route.avanceRoute();
+				route.addPointInvisible2();
 				route.removePointInvisible();
-				route.addPointInvisible();
 				route.updateVitesseMoto();
 				
 				Thread.sleep(secondeAvancee); //on renouvelle toutes les 'secondes'
