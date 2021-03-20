@@ -25,6 +25,7 @@ public class Route {
 	public final static int TAILLEAVANCEE = 10;
 	public final static int ACCELERATION = 5;
 	
+	public final static int VITESSEMAX = 300;
 	
 	/****************ATTRIBUTS****************/
 	private ArrayList<Point> listePointsG;
@@ -246,10 +247,10 @@ public class Route {
 			int yG = this.getPointG(this.getListePointsG().size()-1).y;
 			//yG = yG - r.nextInt(HAUTEURMAXROUTE) - HAUTEURMINROUTE;
 			yG =  1;
-			System.out.printf("ordonnee before : %d\n", this.getListePointsG().size());
+			//System.out.printf("ordonnee before : %d\n", this.getListePointsG().size());
 
 			this.listePointsG.add(new Point(xG, yG));
-			System.out.printf("ordonnee after : %d\n", this.getListePointsG().size());
+			//System.out.printf("ordonnee after : %d\n", this.getListePointsG().size());
 
 			//affiche_listePoints();
 			
@@ -338,9 +339,20 @@ public class Route {
 		
 		//abscisse situee sur le segmentD et dont l'ordonnee correspond a la positionY de la moto
 		float result = (this.getMoto().getPositionY() - Moto.POSITIONXMOTO) / coef;
+		
 		return result;
 	}
 	
+	public boolean estDansRoute() {
+		if(this.abscisseNiveauMotoG() < this.getMoto().getPositionX() 
+				&& this.getMoto().getPositionX() < this.abscisseNiveauMotoD()) {
+			return true;
+		} else if(this.abscisseNiveauMotoG() > this.getMoto().getPositionX()
+					|| this.getMoto().getPositionX() > this.abscisseNiveauMotoD()) {
+				return false;
+		}
+		return false;
+	}
 	
 	/**
 	 * methode updateVitesseMoto():
@@ -348,11 +360,16 @@ public class Route {
 	 * decremente sinon
 	 */
 	public void updateVitesseMoto() {
-		if(this.abscisseNiveauMotoG() < this.getMoto().getPositionX() 
-			|| this.getMoto().getPositionX() < this.abscisseNiveauMotoD()) {
-			this.getMoto().setVitesse(this.getMoto().getVitesse() + ACCELERATION);
-		}else {
-			this.getMoto().setVitesse(this.getMoto().getVitesse() - ACCELERATION);
+		if(this.estDansRoute()) {
+			if(this.getMoto().getVitesse() < VITESSEMAX) { //tant que la vitesse max n'est pas atteint
+				this.getMoto().setVitesse(this.getMoto().getVitesse() + ACCELERATION);
+				System.out.printf("acceleration : %f\n", this.getMoto().getVitesse());
+			}
+		}else{
+			if(this.getMoto().getVitesse() > 0) {
+				this.getMoto().setVitesse(this.getMoto().getVitesse() - ACCELERATION);
+				System.out.printf("deceleration : %f\n", this.getMoto().getVitesse());
+			}
 		}
 	}
 

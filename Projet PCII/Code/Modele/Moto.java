@@ -16,7 +16,7 @@ public class Moto {
 	public Moto() {
 		this.positionX = POSITIONXMOTO;
 		this.positionY = Vue.AffichageJeu.HAUTAFFICHAGE - 20;
-		this.vitesse = 80;
+		this.vitesse = 0;
 		System.out.printf("POSITIONXMOTO = %d\n", POSITIONXMOTO);
 		System.out.printf("positionY = %d\n", this.positionY);
 	}
