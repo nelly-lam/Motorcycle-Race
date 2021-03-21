@@ -19,9 +19,9 @@ public class MyTimer {
 
 
     /** crée un timer qui se déclenche direct à son initialisation */
-    public MyTimer(long sec){
+    public MyTimer(long tps){
         this.startTimer = Instant.now();
-        this.time = sec;
+        this.time = tps;
         this.pause = false;
     }
   
@@ -53,6 +53,16 @@ public class MyTimer {
         this.time() -= tps;
     }
     
-    
+    /** fonction pour reprendre timer */
+    public void reprendreTimer(){
+        if(this.pause != false){
+            throw new RuntimeException("Problème");
+        } else {
+            this.pause = false;
+            Instant restart = Instant.now();
+            long pause = Duration.between(this.startPause, restart).toSeconds();
+            this.startTimer = this.startTimer.plusSeconds(pause);  
+        }
+    }
     
   
