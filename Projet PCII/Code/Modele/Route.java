@@ -343,6 +343,12 @@ public class Route {
 		return result;
 	}
 	
+	/**
+	 * methode estDansRoute():
+	 * verifie que l'abscisse de la moto est entre les traces de la route
+	 * @return renvoie true si la moto est bien sur la route,
+	 * 			false sinon
+	 */
 	public boolean estDansRoute() {
 		if(this.abscisseNiveauMotoG() < this.getMoto().getPositionX() 
 				&& this.getMoto().getPositionX() < this.abscisseNiveauMotoD()) {

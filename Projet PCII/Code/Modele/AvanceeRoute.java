@@ -33,11 +33,19 @@ public class AvanceeRoute extends Thread{
 				route.updateVitesseMoto();
 				
 				if(this.getRoute().estDansRoute()) {
-					this.setSecondeAvancee(this.getSecondeAvancee() - 10*Route.ACCELERATION);
-				}else {
-					this.setSecondeAvancee(this.getSecondeAvancee() + 10*Route.ACCELERATION);
+					if(this.getSecondeAvancee() != 0) {
+						this.setSecondeAvancee(this.getSecondeAvancee() - 20*Route.ACCELERATION);
+					}
+						Thread.sleep(secondeAvancee);
+				}else{
+					if(this.getSecondeAvancee() != 1500) {
+						this.setSecondeAvancee(this.getSecondeAvancee() + 20*Route.ACCELERATION);
+					}
+					Thread.sleep(secondeAvancee);
 				}
-				Thread.sleep(secondeAvancee); //on renouvelle toutes les 'millisecondes'
+				if(this.getRoute().getMoto().getVitesse() == 0.) {
+					this.setRun(false);
+				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
