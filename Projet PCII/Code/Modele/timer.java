@@ -55,7 +55,7 @@ public class MyTimer {
     
     /** fonction pour reprendre timer */
     public void reprendreTimer(){
-        if(this.pause != false){
+        if(this.pause == false){
             throw new RuntimeException("Problème");
         } else {
             this.pause = false;
