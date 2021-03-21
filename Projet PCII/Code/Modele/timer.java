@@ -31,5 +31,28 @@ public class MyTimer {
         this.pause = true;
         this.startPause = Instant.now();
     }
+    
+    /** Getter et setters classiques */
+    
+    public boolean getifPaused(){
+        return this.pause;
+    }
 
+    /** Renvoie le temps du timer */
+    public long getTimer(){
+        return this.time;
+    }
+    
+    /** fonctions pour faire avancer ou reculer le timer */
+
+    public void avancerTimer(long tps){
+        this.time() += tps;
+    }
+    
+    public void reculerTimer(long tps){
+        this.time() -= tps;
+    }
+    
+    
+    
   
