@@ -65,4 +65,14 @@ public class MyTimer {
         }
     }
     
+    public boolean timerOver(){
+        duration duration;
+        if(pause){
+            d = Duration.between(this.debutTimer, this.debutPause);
+        } else {
+            d = Duration.between(this.debutTimer, Instant.now());
+        }
+        return duration.toSeconds() >= this.time;
+    
+    }
   
