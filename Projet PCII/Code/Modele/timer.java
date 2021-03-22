@@ -44,7 +44,12 @@ public class MyTimer {
     }
     
     public Duration getTempsRestant(){
-        
+        Duration duration ;
+        if(pause){
+            duration = Duration.between(this.debutPause,this.debutTimer);
+        } else {
+            uration = Duration.between(Instant.now,this.debutTimer);
+        }
     }
     
     /** fonctions pour faire avancer ou reculer le timer */
