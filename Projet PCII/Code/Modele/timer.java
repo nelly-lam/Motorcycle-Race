@@ -43,7 +43,7 @@ public class MyTimer {
         return this.time;
     }
     
-    public duration getTempsRestant(){
+    public Duration getTempsRestant(){
         
     }
     
@@ -70,7 +70,7 @@ public class MyTimer {
     }
     
     public boolean timerOver(){
-        duration duration;
+        Duration duration;
         if(pause){
             d = duration.between(this.debutTimer, this.debutPause);
         } else {
@@ -87,10 +87,10 @@ public class MyTimer {
         int sec = d.toSecondsPart();
         String str = "";
         if( h!=0 ) {
-            str += String.valueOf(h) + "::";
+            str += String.valueOf(h) + ":";
         }
         if( m!=0 ) {
-            str += String.valueOf(m) + "::";
+            str += String.valueOf(m) + ":";
         }
         if( sec!=0 ) {
             str += String.valueOf(sec);
