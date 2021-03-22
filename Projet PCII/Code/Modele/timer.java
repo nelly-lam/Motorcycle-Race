@@ -43,6 +43,10 @@ public class MyTimer {
         return this.time;
     }
     
+    public duration getTempsRestant(){
+        
+    }
+    
     /** fonctions pour faire avancer ou reculer le timer */
 
     public void avancerTimer(long tps){
@@ -76,3 +80,23 @@ public class MyTimer {
     
     }
   
+    public String toString(){
+        Duration d = this.getTempsRestant();
+        int h = d.toHoursPart();
+        int m = d.toMinutesPart();
+        int sec = d.toSecondsPart();
+        String str = "";
+        if( h!=0 ) {
+            str += String.valueOf(h) + "::";
+        }
+        if( m!=0 ) {
+            str += String.valueOf(m) + "::";
+        }
+        if( sec!=0 ) {
+            str += String.valueOf(sec);
+        }
+        return str;
+    }
+    
+    
+    
