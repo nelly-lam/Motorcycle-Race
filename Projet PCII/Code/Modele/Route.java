@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
+import Vue.AffichageJeu;
+
 
 public class Route extends Observable{
 	
@@ -28,6 +30,7 @@ public class Route extends Observable{
 	
 	public final static int VITESSEMAX = 300;
 	
+	
 	/****************ATTRIBUTS****************/
 	private ArrayList<Point> listePointsG;
 	private ArrayList<Point> listePointsD;
@@ -35,6 +38,9 @@ public class Route extends Observable{
 	private int horizon;
 	//score = nombre de kilometre parcourus
 	private int kilometre;
+	
+	private ArrayList<Point> listeObstacles;
+	private ArrayList<Point> listeCheckpoints;
 	
 	
 	/****************CONSTRUCTEUR****************/
@@ -89,6 +95,16 @@ public class Route extends Observable{
 		
 		this.affiche_listePoints();
 		
+	///////////////////////////INITIALISATION DES OBSTACLES/////////////////////////////////
+	this.listeObstacles = new ArrayList<Point>();
+	Point newObstacle;
+	for (int i = 0; i < 6; i++) {
+		newObstacle = new Point(r.nextInt(AffichageJeu.LARGAFFICHAGE), r.nextInt(AffichageJeu.HAUTAFFICHAGE));
+	}
+		
+	///////////////////////////INITIALISATION DES CHECKPOINTS/////////////////////////////////
+	this.listeCheckpoints = new ArrayList<Point>();
+	Point newCheckpoints;
 	}
 	
 	
@@ -99,6 +115,7 @@ public class Route extends Observable{
 	public int getKilometre() { return kilometre; }
 	public int getHorizon() { return horizon; }
 	public Moto getMoto() { return moto; }
+	
 	/**
 	 * methode getPoint() : renvoie le Point situe a l'indice i de l'ArrayList listePoints
 	 * @param i un indice int
@@ -113,7 +130,19 @@ public class Route extends Observable{
 	public void setKilometre(int kilometre) { this.kilometre = kilometre; }
 	public void setHorizon(int horizon) { this.horizon = horizon; }
 	public void setMoto(Moto moto) { this.moto = moto; }
-	
+
+	public ArrayList<Point> getListeObstacles() {
+		return listeObstacles;
+	}
+	public void setListeObstacles(ArrayList<Point> listeObstacles) {
+		this.listeObstacles = listeObstacles;
+	}
+	public ArrayList<Point> getListeCheckpoints() {
+		return listeCheckpoints;
+	}
+	public void setListeCheckpoints(ArrayList<Point> listeCheckPoints) {
+		this.listeCheckpoints = listeCheckPoints;
+	}
 	
 	/**
 	 * methode setPointG() : modifie le Point situe a l'indice i de l'ArrayList listePointsG
@@ -138,6 +167,13 @@ public class Route extends Observable{
 	 * methode affiche_listePoints() : affichage d'une liste de Points
 	 */
 	public void affiche_listePoints() {
+		for (int i = 0; i < this.getListePointsG().size(); i++) {
+			System.out.printf("Point %d = (%d, %d)\n", i, this.getListePointsG().get(i).x, 
+															this.getListePointsG().get(i).y);
+		}
+	}
+	
+	public void affiche_liste(ArrayList<Point> list) {
 		for (int i = 0; i < this.getListePointsG().size(); i++) {
 			System.out.printf("Point %d = (%d, %d)\n", i, this.getListePointsG().get(i).x, 
 															this.getListePointsG().get(i).y);
@@ -270,6 +306,8 @@ public class Route extends Observable{
 	
 	
 	
+	
+	
 //////////////////////////////////// GESTION VITESSE MOTO /////////////////////////////////////////	
 	
 	
@@ -385,6 +423,7 @@ public class Route extends Observable{
 			}
 		}
 	}
+
 
 	
 
