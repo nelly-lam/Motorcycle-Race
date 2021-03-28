@@ -4,7 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Route {
+
+public class Route extends Observable{
 	
 	/****************CONSTANTES****************/
 	public final static int POSITIONXMOTO = 100;
@@ -32,6 +33,7 @@ public class Route {
 	private ArrayList<Point> listePointsD;
 	private Moto moto;
 	private int horizon;
+	//score = nombre de kilometre parcourus
 	private int kilometre;
 	
 	
@@ -171,6 +173,7 @@ public class Route {
 		
 		this.setKilometre(this.getKilometre() + 1);
 		
+		this.notifyObservers();
 	}
 	
 	
@@ -185,6 +188,7 @@ public class Route {
 			//on retire le premier Point de la listePoints
 			this.getListePointsG().remove(0);
 			this.getListePointsD().remove(0);
+			this.notifyObservers();
 		}
 	}
 	
@@ -222,6 +226,7 @@ public class Route {
 			int last = this.getListePointsG().size()-1;
 			System.out.printf("Dernier point = (%f, %f)\n", this.getListePointsG().get(last).getX(), 
 					this.getListePointsG().get(last).getY());
+			this.notifyObservers();
 			*/
 		}
 	}
@@ -258,7 +263,7 @@ public class Route {
 			//this.getListePointsG().get(this.getListePointsG().size()-1).y;
 			this.listePointsD.add(new Point(xG+200, yD));
 			//System.out.printf("ordonnee cree : %d\n", this.getListePointsG().size());
-
+			this.notifyObservers();
 		}
 	}
 	
@@ -369,19 +374,18 @@ public class Route {
 		if(this.estDansRoute()) {
 			if(this.getMoto().getVitesse() < VITESSEMAX) { //tant que la vitesse max n'est pas atteint
 				this.getMoto().setVitesse(this.getMoto().getVitesse() + ACCELERATION);
+				this.notifyObservers();
 				System.out.printf("acceleration : %f\n", this.getMoto().getVitesse());
 			}
 		}else{
 			if(this.getMoto().getVitesse() > 0) {
 				this.getMoto().setVitesse(this.getMoto().getVitesse() - ACCELERATION);
+				this.notifyObservers();
 				System.out.printf("deceleration : %f\n", this.getMoto().getVitesse());
 			}
 		}
 	}
 
-
-
-	
 	
 
 }

@@ -1,6 +1,6 @@
 package Modele;
 
-public class Moto {
+public class Moto extends Observable{
 	
 	/****************CONSTANTES****************/
 	public final static int POSITIONXMOTO = Vue.AffichageJeu.LARGAFFICHAGE/2;
@@ -15,7 +15,7 @@ public class Moto {
 	/****************CONSTRUCTEUR****************/
 	public Moto() {
 		this.positionX = POSITIONXMOTO;
-		this.positionY = Vue.AffichageJeu.HAUTAFFICHAGE - 20;
+		this.positionY = Vue.AffichageJeu.HAUTAFFICHAGE - 100;
 		this.vitesse = 0;
 		System.out.printf("POSITIONXMOTO = %d\n", POSITIONXMOTO);
 		System.out.printf("positionY = %d\n", this.positionY);
@@ -37,6 +37,8 @@ public class Moto {
 	public void deplaceDroit() {
 		if(this.getPositionX() < Vue.AffichageJeu.LARGAFFICHAGE) {
 			this.setPositionX(this.getPositionX() + TAILLEDEPLACEMENT);
+			this.notifyObservers();
+			//System.out.printf("La moto se deplacea droite\n");
 		}else{
 			System.out.printf("La moto va sortir de l'ecran\n");
 		}
@@ -50,6 +52,7 @@ public class Moto {
 	public void deplaceGauche() {
 		if(0 < this.getPositionX()) {
 			this.setPositionX(this.getPositionX() - TAILLEDEPLACEMENT);
+			this.notifyObservers();
 		}else{
 			System.out.printf("La moto va sortir de l'ecran\n");
 		}
