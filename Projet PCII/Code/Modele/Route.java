@@ -95,16 +95,19 @@ public class Route extends Observable{
 		
 		this.affiche_listePoints();
 		
-	///////////////////////////INITIALISATION DES OBSTACLES/////////////////////////////////
-	this.listeObstacles = new ArrayList<Point>();
-	Point newObstacle;
-	for (int i = 0; i < 6; i++) {
-		newObstacle = new Point(r.nextInt(AffichageJeu.LARGAFFICHAGE), r.nextInt(AffichageJeu.HAUTAFFICHAGE));
-	}
+		///////////////////////////INITIALISATION DES OBSTACLES/////////////////////////////////
+		this.listeObstacles = new ArrayList<Point>();
+		Random rObstacle = new Random();
+	
+		for (int i = 0; i < 6; i++) {
+			this.getListeObstacles().add(new Point(rObstacle.nextInt(AffichageJeu.LARGAFFICHAGE), rObstacle.nextInt(AffichageJeu.HAUTAFFICHAGE - POSITIONHORIZON) + POSITIONHORIZON));
+		}
+		this.affiche_liste(this.getListeObstacles());
 		
-	///////////////////////////INITIALISATION DES CHECKPOINTS/////////////////////////////////
-	this.listeCheckpoints = new ArrayList<Point>();
-	Point newCheckpoints;
+		///////////////////////////INITIALISATION DES CHECKPOINTS/////////////////////////////////
+		this.listeCheckpoints = new ArrayList<Point>();
+		Point newCheckpoints;
+	
 	}
 	
 	
@@ -162,6 +165,15 @@ public class Route extends Observable{
 		this.listePointsD.set(i, pt);
 	}
 	
+	/**
+	 * Methode setPoint : modifir le Point situe a l'indice i de l'ArrayList l
+	 * @param l une ArrayList<Point> : la liste a modifier
+	 * @param i un int : indice
+	 * @param pt un Point
+	 */
+	public void setPoint(ArrayList<Point> l, int i, Point pt) {
+		l.set(i, pt);
+	}
 	
 	/**
 	 * methode affiche_listePoints() : affichage d'une liste de Points
@@ -174,9 +186,9 @@ public class Route extends Observable{
 	}
 	
 	public void affiche_liste(ArrayList<Point> list) {
-		for (int i = 0; i < this.getListePointsG().size(); i++) {
-			System.out.printf("Point %d = (%d, %d)\n", i, this.getListePointsG().get(i).x, 
-															this.getListePointsG().get(i).y);
+		for (int i = 0; i < list.size(); i++) {
+			System.out.printf("Point obstacle %d = (%d, %d)\n", i, list.get(i).x, 
+															list.get(i).y);
 		}
 	}
 	
@@ -211,7 +223,6 @@ public class Route extends Observable{
 		
 		this.notifyObservers();
 	}
-	
 	
 	/**
 	 * methode removePointInvisible() : modifie la listePoints en supprimant le premier Point 
@@ -275,7 +286,7 @@ public class Route extends Observable{
 	 */
 	public void addPointInvisible2() {
 
-		//si l'ordonnee du dernier Point de listePointsG est superieure a -30
+		//si l'ordonnee du dernier Point de listePointsG est superieure a la position de l'horizon
 		if(this.getListePointsG().get(this.getListePointsG().size()-1).y > POSITIONHORIZON) {
 			System.out.printf("y : %d\n", this.getListePointsG().get(this.getListePointsG().size()-1).y);
 
@@ -303,10 +314,57 @@ public class Route extends Observable{
 		}
 	}
 	
+		
+	/**
+	 * Methode avanceObstacles() : 
+	 * modifie la liste des obstacles listeObstacles en incrementant leur ordonnee
+	 */
+	public void avanceObstacles() {
+		int x, y;
+		ArrayList<Point> newListe = new ArrayList<Point>();
+		for(int i = 0; i < this.getListeObstacles().size(); i++) {
+			x = (int) (this.getListeObstacles().get(i).x);
+			y = (int) (this.getListeObstacles().get(i).y + TAILLEAVANCEE);
+			newListe.add(new Point(x, y));
+		}
+		this.setListeObstacles(newListe);
+		this.notifyObservers();
+	}
 	
 	
+	/**
+	 * methode removePointInvisibleObstacles() : modifie la listeObstacles en supprimant le premier Point 
+	 * situe en dehors de la fenetre d'affichage
+	 */
+	public void removePointInvisibleObstacles() {
+		//si le premier Point et le deuxieme Point sont en dehors de l'affichage
+		if(this.getListeObstacles().get(0).y > Vue.AffichageJeu.HAUTAFFICHAGE && 
+				this.getListeObstacles().get(1).y > Vue.AffichageJeu.HAUTAFFICHAGE) {
+			//on retire le premier Point de la listePoints
+			this.getListeObstacles().remove(0);
+			this.getListeObstacles().remove(0);
+			this.notifyObservers();
+		}
+	}
 	
-	
+	/**
+	 * methode addPointInvisibleObstacles() : modifie la listeObstacle en ajoutant un Point de coordonnee aleatoire
+	 * a la fin, si le dernier Point a une ordonnee superieure a l'horizon
+	 */
+	public void addPointInvisibleObstacles() {
+
+		//si l'ordonnee du dernier Point de listeObstacles est superieure a la position de l'horizon
+		if(this.getListeObstacles().get(this.getListeObstacles().size()-1).y > POSITIONHORIZON) {
+			//System.out.printf("y : %d\n", this.getListeObstacles().get(this.getListeObstacles().size()-1).y);
+
+			Random r = new Random();
+			int x = r.nextInt(AffichageJeu.LARGAFFICHAGE);
+			int y = r.nextInt(POSITIONHORIZON);
+			this.getListeObstacles().add(new Point(x, y));
+			
+			this.notifyObservers();
+		}
+	}
 	
 //////////////////////////////////// GESTION VITESSE MOTO /////////////////////////////////////////	
 	

@@ -30,6 +30,9 @@ public class AvanceeRoute extends Thread{
 				route.avanceRoute();
 				route.addPointInvisible2();
 				route.removePointInvisible();
+				route.avanceObstacles();
+				route.addPointInvisibleObstacles();
+				route.removePointInvisibleObstacles();
 				route.updateVitesseMoto();
 				
 				if(this.getRoute().estDansRoute()) {
