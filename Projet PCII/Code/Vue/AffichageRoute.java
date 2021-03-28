@@ -51,17 +51,22 @@ public class AffichageRoute extends JPanel implements Observer{
 			e.printStackTrace();
 		}
     	paintRoute(g);
-    	paintHorizon(g);
+    	try {
+			paintHorizon(g);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	paintObstacles(g);
     	
     }
 
 
     public void paintMoto(Graphics g) throws IOException {
-    	g.setColor(Color.RED);
+    	//g.setColor(Color.RED);
 		Image img1 = ImageIO.read(new File("./Code/Images/moto.png")).getScaledInstance(30, 30, Image.SCALE_DEFAULT);
 		g.drawImage(img1, this.getMoto().getPositionX() - 15, this.getMoto().getPositionY() - 15, this);
-    	g.drawString("X", this.getMoto().getPositionX(), this.getMoto().getPositionY());
+    	//g.drawString("X", this.getMoto().getPositionX(), this.getMoto().getPositionY());
     }
     
     public void paintRoute(Graphics g) {
@@ -81,11 +86,15 @@ public class AffichageRoute extends JPanel implements Observer{
     	}
     }
     
-    public void paintHorizon(Graphics g) {
-    	g.setColor(Color.blue);
-    	g.fillRect(0, 0, AffichageJeu.LARGAFFICHAGE, Route.POSITIONHORIZON);
+    public void paintHorizon(Graphics g) throws IOException {
+    	//g.setColor(Color.blue);
+    	//g.fillRect(0, 0, AffichageJeu.LARGAFFICHAGE, Route.POSITIONHORIZON);
+
+		Image img = ImageIO.read(new File("./Code/Images/fuji.png")).getScaledInstance(AffichageJeu.LARGAFFICHAGE, Route.POSITIONHORIZON, Image.SCALE_DEFAULT);
+		g.drawImage(img, 0, 0, this);
     	//g.drawLine( 0, Modele.Route.POSITIONHORIZON, Vue.AffichageJeu.LARGAFFICHAGE, Modele.Route.POSITIONHORIZON);
     }
+
     
     public void paintObstacles(Graphics g) {
     	g.setColor(Color.orange);
