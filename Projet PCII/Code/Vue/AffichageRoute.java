@@ -97,7 +97,7 @@ public class AffichageRoute extends JPanel implements Observer{
 
     
     public void paintObstacles(Graphics g) {
-    	g.setColor(Color.orange);
+    	g.setColor(Color.red);
     	for(int i = 0; i < this.getRoute().getListeObstacles().size()-1; i++) {
     		g.drawString("X", (int) this.getRoute().getListeObstacles().get(i).getX(), (int) this.getRoute().getListeObstacles().get(i).getY());
     	}

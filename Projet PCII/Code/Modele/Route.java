@@ -14,7 +14,7 @@ public class Route extends Observable{
 	public final static int POSITIONHORIZON = 180;
 	
 	public final static int LARGEURMINROUTE = 50;
-	public final static int LARGEURMAXROUTE = 150;
+	public final static int LARGEURMAXROUTE = 200;
 	
 	public final static int HAUTEURMINROUTE = 100;
 	public final static int HAUTEURMAXROUTE = 150;
@@ -22,8 +22,8 @@ public class Route extends Observable{
 	public final static int bordureMinX = 150;
 	public final static int plageLargeurRoute = LARGEURMAXROUTE - LARGEURMINROUTE;
 	
-	public final static int departXDroit = Moto.POSITIONXMOTO + LARGEURMAXROUTE/2;
-	public final static int departXGauche = Moto.POSITIONXMOTO - LARGEURMAXROUTE/2;
+	//public final static int departXDroit = Moto.POSITIONXMOTO + LARGEURMAXROUTE/2 + 50;
+	public final static int departXGauche = Moto.POSITIONXMOTO - LARGEURMAXROUTE/2 - 40;
 	
 	public final static int TAILLEAVANCEE = 10;
 	public final static int ACCELERATION = 5;
@@ -51,15 +51,15 @@ public class Route extends Observable{
 		this.listePointsG = new ArrayList<Point>();
 		this.listePointsD = new ArrayList<Point>();
 		
-		Point departG = new Point(departXGauche, Vue.AffichageJeu.HAUTAFFICHAGE);
-		this.listePointsG.add(departG);
-		Point departD = new Point(departXDroit, Vue.AffichageJeu.HAUTAFFICHAGE);
-		this.listePointsD.add(departD);
+		Point departG1 = new Point(departXGauche, Vue.AffichageJeu.HAUTAFFICHAGE);
+		this.listePointsG.add(departG1);
+		Point departG2 = new Point(departXGauche, Vue.AffichageJeu.HAUTAFFICHAGE - 200);
+		this.listePointsG.add(departG2);
 		
 		
-		///////////////////////////INITIALISATION DES POINTS DE LA LIGNE COTE DROIT/////////////////////////////////
-		int xG = (departG.x);
-		int yG = (departG.y);
+		///////////////////////////INITIALISATION DES POINTS DE LA LIGNE COTE GAUCHE/////////////////////////////////
+		int xG = (departG2.x);
+		int yG = (departG2.y);
 		Random r = new Random();
 		
 		//int profondeur = 0;
@@ -87,27 +87,29 @@ public class Route extends Observable{
 		int yD = 0;
 		
 		for(int i = 0; i < this.getListePointsG().size(); i++) {
-			xD = (this.getListePointsG().get(i).x + LARGEURMAXROUTE + 80);
+			xD = (this.getListePointsG().get(i).x + LARGEURMAXROUTE + 50);
+			//System.out.printf("Point abscisse %d gauche recupere : %d", i, this.getListePointsG().get(i).getX());
 			yD = this.getListePointsG().get(i).y;
 			Point newPoint = new Point(xD, yD);
 			this.getListePointsD().add(newPoint);
 		}
 		
-		this.affiche_listePoints();
+		this.affiche_liste(this.getListePointsG(), "gauche");
+		this.affiche_liste(this.getListePointsD(), "droit");
+		
 		
 		///////////////////////////INITIALISATION DES OBSTACLES/////////////////////////////////
 		this.listeObstacles = new ArrayList<Point>();
 		Random rObstacle = new Random();
-	
 		for (int i = 0; i < 6; i++) {
-			this.getListeObstacles().add(new Point(rObstacle.nextInt(AffichageJeu.LARGAFFICHAGE), rObstacle.nextInt(AffichageJeu.HAUTAFFICHAGE - POSITIONHORIZON) + POSITIONHORIZON));
+			this.getListeObstacles().add(new Point(rObstacle.nextInt(AffichageJeu.LARGAFFICHAGE), rObstacle.nextInt(AffichageJeu.HAUTAFFICHAGE - POSITIONXMOTO - POSITIONHORIZON) + POSITIONHORIZON));
 		}
-		this.affiche_liste(this.getListeObstacles());
+		this.affiche_liste(this.getListeObstacles(), "obstacles");
 		
 		///////////////////////////INITIALISATION DES CHECKPOINTS/////////////////////////////////
 		this.listeCheckpoints = new ArrayList<Point>();
 		Point newCheckpoints;
-	
+		
 	}
 	
 	
@@ -176,18 +178,13 @@ public class Route extends Observable{
 	}
 	
 	/**
-	 * methode affiche_listePoints() : affichage d'une liste de Points
+	 * Methode affiche_liste(): Affiche les Points qui composent une liste
+	 * @param list un ArrayList<Point>
+	 * @param str un String : le nom de la liste
 	 */
-	public void affiche_listePoints() {
-		for (int i = 0; i < this.getListePointsG().size(); i++) {
-			System.out.printf("Point %d = (%d, %d)\n", i, this.getListePointsG().get(i).x, 
-															this.getListePointsG().get(i).y);
-		}
-	}
-	
-	public void affiche_liste(ArrayList<Point> list) {
+	public void affiche_liste(ArrayList<Point> list, String str) {
 		for (int i = 0; i < list.size(); i++) {
-			System.out.printf("Point obstacle %d = (%d, %d)\n", i, list.get(i).x, 
+			System.out.printf("Point %s %d = (%d, %d)\n", str, i, list.get(i).x, 
 															list.get(i).y);
 		}
 	}
@@ -290,7 +287,6 @@ public class Route extends Observable{
 		if(this.getListePointsG().get(this.getListePointsG().size()-1).y > POSITIONHORIZON) {
 			System.out.printf("y : %d\n", this.getListePointsG().get(this.getListePointsG().size()-1).y);
 
-			
 			Random r = new Random();
 			int xG = r.nextInt(plageLargeurRoute) + bordureMinX;
 			
@@ -303,12 +299,10 @@ public class Route extends Observable{
 
 			this.listePointsG.add(new Point(xG, yG));
 			//System.out.printf("ordonnee after : %d\n", this.getListePointsG().size());
-
-			//affiche_listePoints();
 			
 			int yD = yG;
 			//this.getListePointsG().get(this.getListePointsG().size()-1).y;
-			this.listePointsD.add(new Point(xG+200, yD));
+			this.getListePointsD().add(new Point(xG + LARGEURMAXROUTE, yD));
 			//System.out.printf("ordonnee cree : %d\n", this.getListePointsG().size());
 			this.notifyObservers();
 		}
@@ -352,7 +346,6 @@ public class Route extends Observable{
 	 * a la fin, si le dernier Point a une ordonnee superieure a l'horizon
 	 */
 	public void addPointInvisibleObstacles() {
-
 		//si l'ordonnee du dernier Point de listeObstacles est superieure a la position de l'horizon
 		if(this.getListeObstacles().get(this.getListeObstacles().size()-1).y > POSITIONHORIZON) {
 			//System.out.printf("y : %d\n", this.getListeObstacles().get(this.getListeObstacles().size()-1).y);
@@ -366,6 +359,8 @@ public class Route extends Observable{
 		}
 	}
 	
+	
+	
 //////////////////////////////////// GESTION VITESSE MOTO /////////////////////////////////////////	
 	
 	
@@ -373,7 +368,7 @@ public class Route extends Observable{
 	 * methode iBetween() :
 	 * @param p1 un Point
 	 * @param p2 un Point
-	 * @return true si l'ovale se trouve entre les abscisses des deux points p1 (inclus) et p2 (exclus), 
+	 * @return true si la moto se trouve entre les abscisses des deux points p1 (inclus) et p2 (exclus), 
 	 * 			false sinon
 	 */
 	public boolean isBetween(Point p1, Point p2) {
@@ -391,26 +386,31 @@ public class Route extends Observable{
 	 * 			(au niveau de la moto) par rapport a l'ordonnee de la moto	
 	 */
 	public float abscisseNiveauMotoG() {
-		int i = 0;
 		int indice = 0;
-		
-		while(this.getListePointsG().get(i).y < this.getMoto().getPositionY()) {
-			indice = i; //indice du Point dont l'ordonnee est inferieure a la moto et le plus proche
-			i++;
-		}
-		
+
 		/* recuperation des Points les plus proches de la moto
 		 * p1 le Point en dessous, p2 le Point au dessus
 		 */
 		Point p1 = new Point(this.getListePointsG().get(indice));
 		Point p2 = new Point(this.getListePointsG().get(indice+1));
+		if(!isBetween(p1, p2)) {
+			p1 = new Point(this.getListePointsG().get(indice+1));
+			p2 = new Point(this.getListePointsG().get(indice+2));
+		}
 		
 		/*coefficient du segment au niveau de la moto*/
 		float coef = (float) ( (p2.y - p1.y)
 					/ (float) (p2.x - (float) p1.x) );
+		//System.out.printf("COEF gauche : %f\n", coef);
 		
 		//abscisse situee sur le segmentG et dont l'ordonnee correspond a la positionY de la moto
-		float result = (this.getMoto().getPositionY() - Moto.POSITIONXMOTO) / coef;
+		
+		//Ordonnee a l'origine b
+		float b = p1.y - coef * p1.x;
+		//y = coef * result + b -> result = (y-b) / coef
+		float result = (this.getMoto().getPositionY() - b) / coef;
+		//float result = (this.getMoto().getPositionY() - Moto.POSITIONXMOTO) / coef;
+		System.out.printf("abscisse route gauche : %f\n", result);
 		return result;
 	}
 	
@@ -421,26 +421,29 @@ public class Route extends Observable{
 	 * 			(au niveau de la moto) par rapport a l'ordonnee de la moto	
 	 */
 	public float abscisseNiveauMotoD() {
-		int i = 0;
 		int indice = 0;
-		while(this.getListePointsD().get(i).y < this.getMoto().getPositionY()) {
-			indice = i; //indice du Point dont l'ordonnee est inferieure a la moto et le plus proche
-			i++;
-		}
-		
 		/* recuperation des Points les plus proches de la moto
 		 * p1 le Point en dessous, p2 le Point au dessus
 		 */
 		Point p1 = new Point(this.getListePointsD().get(indice));
 		Point p2 = new Point(this.getListePointsD().get(indice+1));
+		if(!isBetween(p1, p2)) {
+			p1 = new Point(this.getListePointsD().get(indice+1));
+			p2 = new Point(this.getListePointsD().get(indice+2));
+		}
 		
 		/*coefficient du segment au niveau de la moto*/
 		float coef = (float) ( (p2.y - p1.y)
 					/ (float) (p2.x - (float) p1.x) );
+		//System.out.printf("COEF droit : %f\n", coef);
 		
 		//abscisse situee sur le segmentD et dont l'ordonnee correspond a la positionY de la moto
-		float result = (this.getMoto().getPositionY() - Moto.POSITIONXMOTO) / coef;
-		
+
+		//Ordonnee a l'origine b
+		float b = p1.y - coef * p1.x;
+		//y = coef * result + b -> result = (y-b) / coef
+		float result = (this.getMoto().getPositionY() - b) / coef;
+		System.out.printf("abscisse route droit : %f\n", result);
 		return result;
 	}
 	
@@ -453,10 +456,12 @@ public class Route extends Observable{
 	public boolean estDansRoute() {
 		if(this.abscisseNiveauMotoG() < this.getMoto().getPositionX() 
 				&& this.getMoto().getPositionX() < this.abscisseNiveauMotoD()) {
+			//System.out.printf("True! abscisseG=%f < La moto=%d < abscisseD=%f\n", this.abscisseNiveauMotoG(), this.getMoto().getPositionX(), this.abscisseNiveauMotoD());
 			return true;
 		} else if(this.abscisseNiveauMotoG() > this.getMoto().getPositionX()
 					|| this.getMoto().getPositionX() > this.abscisseNiveauMotoD()) {
-				return false;
+			//System.out.printf("False! abscisseG=%f > La moto=%d > abscisseD=%f\n", this.abscisseNiveauMotoG(), this.getMoto().getPositionX(), this.abscisseNiveauMotoD());
+			return false;
 		}
 		return false;
 	}
