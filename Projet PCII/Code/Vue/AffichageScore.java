@@ -19,7 +19,7 @@ public class AffichageScore extends JPanel implements Observer{
     JLabel nbKilometre = new JLabel("");
     JLabel score = new JLabel("");
     JLabel nbScore = new JLabel("");
-    JLabel texte = new JLabel("");
+    JLabel texte = new JLabel("Déplacez la moto avec les fleches du clavier <- ->");
     
 	JPanel panel = new JPanel();
     
@@ -38,7 +38,6 @@ public class AffichageScore extends JPanel implements Observer{
 		
 		this.kilometre.setText("Nombre de kilometres parcourus : ");
 		this.nbKilometre.setText(String.valueOf(this.route.getKilometre()));
-		
 		this.score.setText("Score : ");
 		this.nbScore.setText(String.valueOf(this.route.getKilometre()));
 		
@@ -46,9 +45,16 @@ public class AffichageScore extends JPanel implements Observer{
 		information.add(nbKilometre);
 		information.add(score);
 		information.add(nbScore);
+		
+		JPanel txt = new JPanel();
+		
+		txt.add(this.texte);
+		
+		this.add(information);
+		this.add(txt);
 
-		this.panel.setLayout(new BoxLayout(information, BoxLayout.PAGE_AXIS));
-		this.panel.setLayout(new BoxLayout(this.texte, BoxLayout.PAGE_AXIS));
+		this.panel.setLayout(new BoxLayout(information, BoxLayout.Y_AXIS));
+		this.panel.setLayout(new BoxLayout(txt, BoxLayout.Y_AXIS));
 		
 	}
 

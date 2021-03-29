@@ -285,7 +285,7 @@ public class Route extends Observable{
 
 		//si l'ordonnee du dernier Point de listePointsG est superieure a la position de l'horizon
 		if(this.getListePointsG().get(this.getListePointsG().size()-1).y > POSITIONHORIZON) {
-			System.out.printf("y : %d\n", this.getListePointsG().get(this.getListePointsG().size()-1).y);
+			//System.out.printf("y : %d\n", this.getListePointsG().get(this.getListePointsG().size()-1).y);
 
 			Random r = new Random();
 			int xG = r.nextInt(plageLargeurRoute) + bordureMinX;
@@ -410,7 +410,7 @@ public class Route extends Observable{
 		//y = coef * result + b -> result = (y-b) / coef
 		float result = (this.getMoto().getPositionY() - b) / coef;
 		//float result = (this.getMoto().getPositionY() - Moto.POSITIONXMOTO) / coef;
-		System.out.printf("abscisse route gauche : %f\n", result);
+		//System.out.printf("abscisse route gauche : %f\n", result);
 		return result;
 	}
 	
@@ -443,7 +443,7 @@ public class Route extends Observable{
 		float b = p1.y - coef * p1.x;
 		//y = coef * result + b -> result = (y-b) / coef
 		float result = (this.getMoto().getPositionY() - b) / coef;
-		System.out.printf("abscisse route droit : %f\n", result);
+		//System.out.printf("abscisse route droit : %f\n", result);
 		return result;
 	}
 	
@@ -476,13 +476,13 @@ public class Route extends Observable{
 			if(this.getMoto().getVitesse() < VITESSEMAX) { //tant que la vitesse max n'est pas atteint
 				this.getMoto().setVitesse(this.getMoto().getVitesse() + ACCELERATION);
 				this.notifyObservers();
-				System.out.printf("acceleration : %f\n", this.getMoto().getVitesse());
+				//System.out.printf("acceleration : %f\n", this.getMoto().getVitesse());
 			}
 		}else{
 			if(this.getMoto().getVitesse() > 0) {
 				this.getMoto().setVitesse(this.getMoto().getVitesse() - ACCELERATION);
 				this.notifyObservers();
-				System.out.printf("deceleration : %f\n", this.getMoto().getVitesse());
+				//System.out.printf("deceleration : %f\n", this.getMoto().getVitesse());
 			}
 		}
 	}

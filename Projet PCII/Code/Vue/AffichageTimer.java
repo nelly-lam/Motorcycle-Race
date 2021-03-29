@@ -15,23 +15,22 @@ public class AffichageTimer extends JPanel implements Observer{
 	
     JLabel txtTemps = new JLabel();
     JLabel tempsEcoule = new JLabel();
-	JPanel panel = new JPanel();
     
     /*************CONSTRUCTEUR*************/
 	public AffichageTimer(MyTimer t) {
 		this.setTemps(t);
 		this.temps.addObserver(this);
 		
-		this.panel.setPreferredSize(new Dimension(AffichageJeu.LARGAFFICHAGE, 50));
-		this.panel.setLayout(new FlowLayout());
+		this.setPreferredSize(new Dimension(AffichageJeu.LARGAFFICHAGE, 50));
+		this.setLayout(new FlowLayout());
 		
 		txtTemps.setText("Temps restant : ");
 		tempsEcoule.setText(this.getTemps().getTempsRestant().toString());
 		
 		System.out.printf("Temps restant : %s", String.valueOf(this.getTemps().getTempsRestant().toString()));
 		
-		this.panel.add(txtTemps);
-		this.panel.add(tempsEcoule);
+		this.add(txtTemps);
+		this.add(tempsEcoule);
 		
 	}
 

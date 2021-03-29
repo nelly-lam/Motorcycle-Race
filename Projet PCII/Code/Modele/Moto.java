@@ -15,7 +15,7 @@ public class Moto extends Observable{
 	/****************CONSTRUCTEUR****************/
 	public Moto() {
 		this.positionX = POSITIONXMOTO;
-		this.positionY = Vue.AffichageJeu.HAUTAFFICHAGE - 100;
+		this.positionY = Vue.AffichageJeu.HAUTAFFICHAGE - 150;
 		this.vitesse = 0;
 		System.out.printf("POSITIONXMOTO = %d\n", POSITIONXMOTO);
 		System.out.printf("positionY = %d\n", this.positionY);
