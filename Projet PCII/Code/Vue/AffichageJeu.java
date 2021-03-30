@@ -8,7 +8,6 @@ import Controleur.ControlMoto;
 import Modele.AvanceeRoute;
 import Modele.AvanceeTemps;
 import Modele.Moto;
-import Modele.MyTimer;
 import Modele.Route;
 
 public class AffichageJeu extends JPanel{

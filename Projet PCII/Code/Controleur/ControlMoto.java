@@ -2,11 +2,9 @@ package Controleur;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import Modele.AvanceeRoute;
 import Modele.AvanceeTemps;
 import Modele.Moto;
-import Modele.MyTimer;
 
 public class ControlMoto implements KeyListener{
 	

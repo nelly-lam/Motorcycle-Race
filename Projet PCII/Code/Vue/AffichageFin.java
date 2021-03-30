@@ -11,8 +11,13 @@ import Modele.Route;
 
 public class AffichageFin extends JFrame{
 	
+	/*************CONSTANTES*************/
+	private static final long serialVersionUID = 1L;
+	
+	/*************ATTRIBUTS*************/
 	private final Route route;
 	
+	/*************CONSTRUCTEUR*************/
 	public AffichageFin(Route r, String str) {
 		this.route = r;
 		
@@ -40,7 +45,7 @@ public class AffichageFin extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	
+	/*************METHODES*************/
 	public Route getRoute() {
 		return route;
 	}

@@ -3,8 +3,6 @@ package Modele;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
-
-import Vue.AffichageFin;
 import Vue.AffichageJeu;
 
 

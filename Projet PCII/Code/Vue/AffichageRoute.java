@@ -1,17 +1,12 @@
 package Vue;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import Modele.AvanceeTemps;
 import Modele.Moto;
 import Modele.Route;
@@ -64,6 +59,7 @@ public class AffichageRoute extends JPanel implements Observer{
 		g.drawString("Pause (appuyer sur espace pour reprendre la partie)", 400,300);
 	}
 	
+
 	public void paint(Graphics g) {
     	super.revalidate();
     	super.paint(g);

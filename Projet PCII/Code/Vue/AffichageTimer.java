@@ -3,12 +3,9 @@ package Vue;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import Modele.AvanceeTemps;
-import Modele.MyTimer;
 
 public class AffichageTimer extends JPanel implements Observer{
 	
