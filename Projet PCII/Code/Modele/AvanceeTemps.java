@@ -4,19 +4,24 @@ import Vue.AffichageFin;
 
 public class AvanceeTemps extends Thread{
 	
+	/****************CONSTANTES****************/
 	public final static int tempsCheckPoint = 21;
 	public final static int seconde = 1000; //(1s = 1000ms)
 	
+	/****************ATTRIBUTS****************/
 	private boolean run;
 	private Route route;
 	private Thread thread;
 	private int tempsEcoule; //le temps qu'il nous reste avant la fin de la partie
 	
+	/****************CONSTRUCTEUR****************/
 	public AvanceeTemps(Route r) {
 		this.run = true;
 		this.setRoute(r);
 		this.setTempsEcoule(tempsCheckPoint);
 	}
+	
+	/****************METHODES****************/
 	
 	public int getTempsRestant(int i) {
 		return this.getTempsEcoule() - i;

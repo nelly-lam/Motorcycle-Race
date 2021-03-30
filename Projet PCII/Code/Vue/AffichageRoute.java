@@ -116,6 +116,7 @@ public class AffichageRoute extends JPanel implements Observer{
     	}
     }
     
+    
     public void paintHorizon(Graphics g) throws IOException {
     	//g.setColor(Color.blue);
     	//g.fillRect(0, 0, AffichageJeu.LARGAFFICHAGE, Route.POSITIONHORIZON);

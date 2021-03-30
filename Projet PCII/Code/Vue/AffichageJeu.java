@@ -72,5 +72,4 @@ public class AffichageJeu extends JPanel{
 	//public void setMoto(Moto moto) { this.moto = moto; }
 	//public void setRoute(Route route) { this.route = route; }
 	
-    
 }

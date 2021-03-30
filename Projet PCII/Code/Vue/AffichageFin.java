@@ -40,6 +40,7 @@ public class AffichageFin extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	
 	public Route getRoute() {
 		return route;
 	}

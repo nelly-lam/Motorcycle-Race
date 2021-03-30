@@ -75,6 +75,7 @@ public class AffichageScore extends JPanel implements Observer{
 		this.nbVitesse.setText(String.valueOf(this.getMoto().getVitesse()));
 	}
 	
+	
 	public void updateTexte(String str) {
 		this.texte.setText(str);
 	}

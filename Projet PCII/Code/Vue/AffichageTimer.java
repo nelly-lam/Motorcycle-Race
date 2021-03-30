@@ -56,6 +56,5 @@ public class AffichageTimer extends JPanel implements Observer{
 		repaint();
 	}
 	
-	
 
 }

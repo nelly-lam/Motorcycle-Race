@@ -507,6 +507,7 @@ public class Route extends Observable{
 		return false;
 	}
 	
+	
 	/**
 	 * Methode ifVitesseNulle() : renvoie true si la vitesse de la moto est a zero
 	 * @return true si vitesse = 0, false sinon

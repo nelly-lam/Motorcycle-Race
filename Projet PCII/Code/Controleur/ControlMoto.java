@@ -22,7 +22,6 @@ public class ControlMoto implements KeyListener{
 		this.ar = ar;
 	}
 
-	
 	/****************METHODES****************/
 	@Override
 	public void keyTyped(KeyEvent e) {
