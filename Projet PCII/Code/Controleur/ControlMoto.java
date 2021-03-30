@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import Modele.AvanceeRoute;
+import Modele.AvanceeTemps;
 import Modele.Moto;
 import Modele.MyTimer;
 
@@ -11,11 +12,11 @@ public class ControlMoto implements KeyListener{
 	
 	/****************ATTRIBUTS****************/
 	private final Moto moto;
-	private MyTimer temps;
+	private AvanceeTemps temps;
 	private AvanceeRoute ar;
 	
 	/****************CONSTRUCTEUR****************/
-	public ControlMoto(Moto m, MyTimer t, AvanceeRoute ar) {
+	public ControlMoto(Moto m, AvanceeTemps t, AvanceeRoute ar) {
 		this.moto = m;
 		this.temps = t;
 		this.ar = ar;
@@ -40,6 +41,7 @@ public class ControlMoto implements KeyListener{
 			   this.getMoto().deplaceGauche();
 		   break;
 		   case (KeyEvent.VK_ESCAPE):
+			   /*
 			   if(!this.getTimer().getIfPause()) {
 				   this.getTimer().pause();
 				   //met en arret l'avancee de la route
@@ -50,7 +52,7 @@ public class ControlMoto implements KeyListener{
 				   //met en marche l'avancee de la route
 				   this.getAr().setRun(true);
 			   }
-		   break;
+		   break;*/
 		  }
 	}
 
@@ -61,11 +63,11 @@ public class ControlMoto implements KeyListener{
 
 	public Moto getMoto() { return moto; }
 
-	public MyTimer getTimer() {
+	public AvanceeTemps getTimer() {
 		return temps;
 	}
 
-	public void setTimer(MyTimer timer) {
+	public void setTimer(AvanceeTemps timer) {
 		this.temps = timer;
 	}
 

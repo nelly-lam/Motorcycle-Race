@@ -3,7 +3,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 
-public class MyTimer extends Observable{
+public class MyTimer extends Observable {
 
 	/*************ATTRIBUTS*************/
     /**debut timer**/
@@ -55,11 +55,13 @@ public class MyTimer extends Observable{
      * @return une Duration
      */
     public Duration getTempsRestant(){
-        if(ifPause){
+        if(this.getIfPause()){
         	//this.notifyObservers();
+        	Duration.between(this.getDebutPause(), this.getDebutTimer()).toString();
             return Duration.between(this.getDebutPause(), this.getDebutTimer());
         } else {
         	//this.notifyObservers();
+        	//Duration.between(this.getDebutPause(), this.getDebutTimer()).toString();
             return Duration.between(Instant.now(),this.getDebutTimer());
         }
     }
@@ -124,6 +126,7 @@ public class MyTimer extends Observable{
         int h = d.toHoursPart();
         int m = d.toMinutesPart();
         int sec = d.toSecondsPart();
+        System.out.print("dans toString()");
         String str = "";
         if( h!=0 ) {
             str += String.valueOf(h) + ":";
@@ -137,10 +140,20 @@ public class MyTimer extends Observable{
         return str;
     }
     
+    public String humanReadableFormat(Duration duration) {
+        return duration.toString()
+                .substring(2)
+                .replaceAll("(\\d[HMS])(?!$)", "$1 ")
+                .toLowerCase();
+    }
+    
     
     public void updateTime() {
     	
     }
+    
+    
+    
     
 }
     

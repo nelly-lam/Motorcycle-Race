@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import Controleur.ControlMoto;
 import Modele.AvanceeRoute;
+import Modele.AvanceeTemps;
 import Modele.Moto;
 import Modele.MyTimer;
 import Modele.Route;
@@ -22,11 +23,11 @@ public class AffichageJeu extends JPanel{
 	JFrame fenetre = new JFrame();
     private final Moto moto;
     private final Route route;
-    private MyTimer temps;
+    private AvanceeTemps temps;
     private AvanceeRoute ar;
     
     /*************CONSTRUCTEUR*************/
-    public AffichageJeu(Moto m, Route r, MyTimer t, AvanceeRoute ar) {
+    public AffichageJeu(Moto m, Route r, AvanceeTemps t, AvanceeRoute ar) {
     	this.moto = m;
     	this.route = r;
     	this.temps = t;
@@ -39,15 +40,15 @@ public class AffichageJeu extends JPanel{
 		
 		JPanel panel = new JPanel(new BorderLayout());
     	
-    	AffichageRoute affichageRoute = new AffichageRoute(this.moto, this.route);
+    	AffichageRoute affichageRoute = new AffichageRoute(this.moto, this.route, this.temps);
     	affichageRoute.addKeyListener(new ControlMoto(this.moto, this.temps, this.ar));
 		panel.add(affichageRoute, BorderLayout.CENTER);
 
         AffichageScore affichageScore = new AffichageScore(this.moto, this.route);
         panel.add(affichageScore, BorderLayout.SOUTH); 
         
-        AffichageTimer affichageTimer = new AffichageTimer(this.temps);
-        panel.add(affichageTimer, BorderLayout.NORTH);
+        //AffichageTimer affichageTimer = new AffichageTimer(this.temps);
+        //panel.add(affichageTimer, BorderLayout.NORTH);
         
         this.fenetre.add(panel);
         

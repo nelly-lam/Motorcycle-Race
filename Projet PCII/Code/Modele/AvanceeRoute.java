@@ -1,5 +1,7 @@
 package Modele;
 
+import Vue.AffichageFin;
+
 public class AvanceeRoute extends Thread{
 	
 	/****************CONSTANTES****************/
@@ -34,21 +36,30 @@ public class AvanceeRoute extends Thread{
 				route.addPointInvisibleObstacles();
 				route.removePointInvisibleObstacles();
 				route.updateVitesseMoto();
+				//System.out.printf("dans AvanceeRoute");
 				
-				if(this.getRoute().estDansRoute()) {
+				if(this.getRoute().estDansRoute()) { //si la moto est sur la route
 					if(this.getSecondeAvancee() > 150) {
 						this.setSecondeAvancee(this.getSecondeAvancee() - 20*Route.ACCELERATION);
 					}
 					Thread.sleep(secondeAvancee);
-				}else{
+				}else{ //si la moto n'est pas sur la route
 					if(this.getSecondeAvancee() < 1500) {
 						this.setSecondeAvancee(this.getSecondeAvancee() + 10);
 					}
 					Thread.sleep(secondeAvancee);
 				}
-				if(this.getRoute().getMoto().getVitesse() == 0.) {
+				
+				/////////////////////////////CONDITIONS DE PERTE//////////////////////////////
+				if(this.getRoute().ifCollisionObstacles()) {
 					this.setRun(false);
+					new AffichageFin(this.getRoute(), "vous avez touche un obstacle !");
 				}
+				if(this.getRoute().ifVitesseNulle()) {
+					this.setRun(false);
+					new AffichageFin(this.getRoute(), "vous etes en arret !");
+				}
+				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

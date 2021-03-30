@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
+import Vue.AffichageFin;
 import Vue.AffichageJeu;
 
 
@@ -29,6 +30,7 @@ public class Route extends Observable{
 	public final static int ACCELERATION = 5;
 	
 	public final static int VITESSEMAX = 300;
+	public final static int graduationKilometre = 400; //(500 pixels en ordonnee = 1km)
 	
 	
 	/****************ATTRIBUTS****************/
@@ -73,14 +75,6 @@ public class Route extends Observable{
 		}
 		
 		
-		/*
-		if(this.getListePointsG().get(this.getListePointsG().size()-1).getY() < POSITIONHORIZON) {
-			listePointsG.remove(this.getListePointsG().size()-1);
-		}
-		//ajout en dernier du point sur l'horizon
-		listePointsG.add(new Point(r.nextInt(plageLargeurRoute) + bordureMinX, POSITIONHORIZON));
-		*/
-		
 		
 		///////////////////////////INITIALISATION DES POINTS DE LA LIGNE COTE DROIT/////////////////////////////////
 		int xD = 0;
@@ -99,9 +93,10 @@ public class Route extends Observable{
 		
 		
 		///////////////////////////INITIALISATION DES OBSTACLES/////////////////////////////////
+		
 		this.listeObstacles = new ArrayList<Point>();
 		Random rObstacle = new Random();
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 4; i++) {
 			this.getListeObstacles().add(new Point(rObstacle.nextInt(AffichageJeu.LARGAFFICHAGE), rObstacle.nextInt(AffichageJeu.HAUTAFFICHAGE - POSITIONXMOTO - POSITIONHORIZON) + POSITIONHORIZON));
 		}
 		this.affiche_liste(this.getListeObstacles(), "obstacles");
@@ -245,7 +240,6 @@ public class Route extends Observable{
 		
 		//si l'ordonnee du dernier Point de listePointsG est superieure a -30
 		if(this.getListePointsG().get(this.getListePointsG().size()-1).y > -30) {
-			
 			Random r = new Random();
 			int xG = r.nextInt(plageLargeurRoute) + bordureMinX;
 			
@@ -255,23 +249,11 @@ public class Route extends Observable{
 			yG = yG - r.nextInt(HAUTEURMAXROUTE) - HAUTEURMINROUTE;
 			System.out.printf("ordonnee cree : %d\n", yG);
 			this.listePointsG.add(new Point(xG, yG));
-			
-			//affiche_listePoints();
-			
+
 			int xD = (this.getListePointsG().get(this.getListePointsG().size()-1).x + LARGEURMAXROUTE + 80);
 			int yD = this.getListePointsG().get(this.getListePointsG().size()-1).y;
 			this.listePointsD.add(new Point(xD, yD));
 
-			/*
-			int notLast = this.getListePointsG().size()-2;
-			System.out.printf("Avant dernier point = (%f, %f)\n", this.getListePointsG().get(notLast).getX(), 
-					this.getListePointsG().get(notLast).getY());
-			
-			int last = this.getListePointsG().size()-1;
-			System.out.printf("Dernier point = (%f, %f)\n", this.getListePointsG().get(last).getX(), 
-					this.getListePointsG().get(last).getY());
-			this.notifyObservers();
-			*/
 		}
 	}
 	
@@ -358,7 +340,8 @@ public class Route extends Observable{
 			this.notifyObservers();
 		}
 	}
-	
+
+
 	
 	
 //////////////////////////////////// GESTION VITESSE MOTO /////////////////////////////////////////	
@@ -466,6 +449,13 @@ public class Route extends Observable{
 		return false;
 	}
 	
+	
+	/*
+	public float calculVitesse() {
+		
+	}
+	*/
+	
 	/**
 	 * methode updateVitesseMoto():
 	 * incremente la vitesse de la moto de ACCELERATION si elle est sur la route,
@@ -476,18 +466,59 @@ public class Route extends Observable{
 			if(this.getMoto().getVitesse() < VITESSEMAX) { //tant que la vitesse max n'est pas atteint
 				this.getMoto().setVitesse(this.getMoto().getVitesse() + ACCELERATION);
 				this.notifyObservers();
-				//System.out.printf("acceleration : %f\n", this.getMoto().getVitesse());
+				System.out.printf("acceleration : %f\n", this.getMoto().getVitesse());
 			}
 		}else{
 			if(this.getMoto().getVitesse() > 0) {
 				this.getMoto().setVitesse(this.getMoto().getVitesse() - ACCELERATION);
 				this.notifyObservers();
-				//System.out.printf("deceleration : %f\n", this.getMoto().getVitesse());
+				System.out.printf("deceleration : %f\n", this.getMoto().getVitesse());
 			}
 		}
 	}
 
 
 	
+	
+	
+///////////////////////////////////////////END GAME//////////////////////////////////////////////	
 
+	/**
+	 * Methode ifCollisionObstacles(): renvoie true si la moto touche un obstacle
+	 * @return true si les coordonnees de la moto sont identiques a celles d'un obstacle, false sinon
+	 */
+	public boolean ifCollisionObstacles() {
+		Point pt;
+		int x, y;
+		for(int i = 0; i < this.getListeObstacles().size(); i++) {
+			x = (int) this.getListeObstacles().get(i).getX();
+			y = (int) this.getListeObstacles().get(i).getY();
+			pt = new Point(x, y);
+			//System.out.printf("Point obstacle %d : (%d, %d)\n", i, x, y);
+			//System.out.printf("Point moto : (%d, %d)\n", this.getMoto().getPositionX(), this.getMoto().getPositionY());
+			//si les coordonnees de la moto == les coordonnes d'un obstacle
+			if(pt.y == this.getMoto().getPositionY() && pt.x == this.getMoto().getPositionX()) {
+				//System.out.printf("Point obstacle %d : (%d, %d)\n", i, x, y);
+				//System.out.printf("Point moto : (%d, %d)\n", this.getMoto().getPositionX(), this.getMoto().getPositionY());
+				//System.out.printf("Touche coule");
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Methode ifVitesseNulle() : renvoie true si la vitesse de la moto est a zero
+	 * @return true si vitesse = 0, false sinon
+	 */
+	public boolean ifVitesseNulle() {
+		//Troisieme condition : si la vitesse de la moto est a null
+		if(this.getMoto().getVitesse() == 0.) { //si la moto n'avance plus
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
 }
