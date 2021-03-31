@@ -65,11 +65,6 @@ public class AffichageRoute extends JPanel implements Observer{
     	super.paint(g);
     	super.repaint();
     	
-    	try {
-			paintMoto(g);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
     	paintRoute(g);
     	try {
 			paintHorizon(g);
@@ -84,6 +79,13 @@ public class AffichageRoute extends JPanel implements Observer{
 			e.printStackTrace();
 		}
     	paintTimer(g);
+    	paintCheckpoints(g);
+    	
+    	try {
+			paintMoto(g);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     	
     }
 
@@ -138,9 +140,14 @@ public class AffichageRoute extends JPanel implements Observer{
     }
     
     public void paintCheckpoints(Graphics g) {
-    	g.setColor(Color.red);
-    	for(int i = 0; i < this.getRoute().getListeCheckpoints().size()-1; i++) {
-    		//g.drawString("X", (int) this.getRoute().getListeCheckpoints().get(i).getX(), (int) this.getRoute().getListeCheckpoints().get(i).getY());
+    	g.setColor(Color.orange);
+    	if(this.getRoute().getListeCheckpoints().size() != 0) {
+    		for(int i = 0; i < this.getRoute().getListeCheckpoints().size(); i++) {
+    			g.fillRect((int) this.getRoute().getListeCheckpoints().get(i).getHautGauche().getX(), 
+    						(int) this.getRoute().getListeCheckpoints().get(i).getHautGauche().getY(),
+    						(int) this.getRoute().getListeCheckpoints().get(i).getBasDroit().getX() - (int) this.getRoute().getListeCheckpoints().get(i).getHautGauche().getX(),
+    						(int) this.getRoute().getListeCheckpoints().get(i).getBasDroit().getY() - (int) this.getRoute().getListeCheckpoints().get(i).getHautGauche().getY());
+    		}
     	}
     }
     

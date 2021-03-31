@@ -31,6 +31,7 @@ public class Route extends Observable{
 	
 	public final static int LARGCHECKPOINT = 30;
 	
+	
 	/****************ATTRIBUTS****************/
 	private ArrayList<Point> listePointsG;
 	private ArrayList<Point> listePointsD;
@@ -38,7 +39,7 @@ public class Route extends Observable{
 	private int horizon;
 	//score = nombre de kilometre parcourus
 	private int kilometre;
-	
+	private int resetKilometre;
 	private ArrayList<Point> listeObstacles;
 	private ArrayList<Checkpoint> listeCheckpoints;
 	
@@ -46,6 +47,7 @@ public class Route extends Observable{
 	/****************CONSTRUCTEUR****************/
 	public Route(Moto m) {
 		this.kilometre = 0;
+		this.resetKilometre = 0;
 		this.horizon = POSITIONHORIZON;
 		this.moto = m;
 		this.listePointsG = new ArrayList<Point>();
@@ -101,8 +103,8 @@ public class Route extends Observable{
 		
 		
 		///////////////////////////INITIALISATION DES CHECKPOINTS/////////////////////////////////
+		
 		this.listeCheckpoints = new ArrayList<Checkpoint>();
-
 		
 	}
 	
@@ -114,7 +116,9 @@ public class Route extends Observable{
 	public int getKilometre() { return kilometre; }
 	public int getHorizon() { return horizon; }
 	public Moto getMoto() { return moto; }
-	
+	public int getResetKilometre() { return resetKilometre; }
+	public ArrayList<Point> getListeObstacles() { return listeObstacles; }
+	public ArrayList<Checkpoint> getListeCheckpoints() { return listeCheckpoints; }
 	/**
 	 * methode getPoint() : renvoie le Point situe a l'indice i de l'ArrayList listePoints
 	 * @param i un indice int
@@ -129,15 +133,9 @@ public class Route extends Observable{
 	public void setKilometre(int kilometre) { this.kilometre = kilometre; }
 	public void setHorizon(int horizon) { this.horizon = horizon; }
 	public void setMoto(Moto moto) { this.moto = moto; }
-
-	public ArrayList<Point> getListeObstacles() {
-		return listeObstacles;
-	}
+	public void setResetKilometre(int resetKilometre) { this.resetKilometre = resetKilometre; }
 	public void setListeObstacles(ArrayList<Point> listeObstacles) {
 		this.listeObstacles = listeObstacles;
-	}
-	public ArrayList<Checkpoint> getListeCheckpoints() {
-		return listeCheckpoints;
 	}
 	public void setListeCheckpoints(ArrayList<Checkpoint> listeCheckPoints) {
 		this.listeCheckpoints = listeCheckPoints;
@@ -209,7 +207,6 @@ public class Route extends Observable{
 			newListeD.add(new Point(x, y));
 		}
 		this.setListePointsD(newListeD);
-		
 		this.notifyObservers();
 	}
 	
@@ -311,8 +308,7 @@ public class Route extends Observable{
 	 */
 	public void removePointInvisibleObstacles() {
 		//si le premier Point et le deuxieme Point sont en dehors de l'affichage
-		if(this.getListeObstacles().get(0).y > Vue.AffichageJeu.HAUTAFFICHAGE && 
-				this.getListeObstacles().get(1).y > Vue.AffichageJeu.HAUTAFFICHAGE) {
+		if(this.getListeObstacles().get(0).y > Vue.AffichageJeu.HAUTAFFICHAGE) {
 			//on retire le premier Point de la listePoints
 			this.getListeObstacles().remove(0);
 			this.getListeObstacles().remove(0);
@@ -341,7 +337,56 @@ public class Route extends Observable{
 	
 	public void avanceKilometre() {
 		this.setKilometre(this.getKilometre()+TAILLEAVANCEE);
+		this.setResetKilometre(this.getResetKilometre() + TAILLEAVANCEE);
 		System.out.printf("Kilometres parcourus = %d\n", this.getKilometre());
+		System.out.printf("Kilometres reset = %d\n", this.getResetKilometre());
+	}
+	
+	
+	public void avanceCheckpoint() {
+		if(this.getListeCheckpoints().size() != 0) {
+			ArrayList<Checkpoint> tab = new ArrayList<Checkpoint>();
+			Point p1, p2, p3, p4;
+			for(int i = 0; i < this.getListeCheckpoints().size(); i++) {
+				p1 = (new Point((int) this.getListeCheckpoints().get(i).getHautGauche().getX(), (int)this.getListeCheckpoints().get(i).getHautGauche().getY() + TAILLEAVANCEE));
+				p2 = (new Point((int) this.getListeCheckpoints().get(i).getHautDroit().getX(), (int)this.getListeCheckpoints().get(i).getHautDroit().getY() + TAILLEAVANCEE));
+				p3 = (new Point((int)this.getListeCheckpoints().get(i).getBasGauche().getX(), (int)this.getListeCheckpoints().get(i).getBasGauche().getY() + TAILLEAVANCEE));
+				p4 = (new Point((int)this.getListeCheckpoints().get(i).getBasDroit().getX(), (int)this.getListeCheckpoints().get(i).getBasDroit().getY() + TAILLEAVANCEE));
+
+				tab.add(new Checkpoint(p1, p2, p3, p4));
+			}
+			this.setListeCheckpoints(tab);
+			this.notifyObservers();
+		}
+	}
+	
+	
+	public void addCheckpoint() {
+		//tous les 500 pixels on ajoute un Checkpoint
+		if(this.getResetKilometre() > graduationKilometre/2) {
+			Random r = new Random();
+			Point p1 = new Point(r.nextInt(AffichageJeu.LARGAFFICHAGE), POSITIONHORIZON);
+			Point p2 = new Point((int) p1.getX() + 30, POSITIONHORIZON);
+			Point p3 = new Point((int) p1.getX(), POSITIONHORIZON + 5);
+			Point p4 = new Point((int) p1.getX() + 30, POSITIONHORIZON + 5);
+			Checkpoint cp = new Checkpoint(p1, p2, p3, p4);
+			this.getListeCheckpoints().add(cp);
+			this.setResetKilometre(0);
+			this.notifyObservers();
+		}
+	}
+	
+	public void removeCheckpoint() {
+		//si le premier Point et le deuxieme Point sont en dehors de l'affichage
+		if(this.getListeCheckpoints().size() > 1) {
+			if(this.getListeCheckpoints().get(0).getBasGauche().getY() > Vue.AffichageJeu.HAUTAFFICHAGE &&
+					this.getListeCheckpoints().get(1).getBasGauche().getY() > Vue.AffichageJeu.HAUTAFFICHAGE) {
+				//on retire le premier Point de la listePoints
+				this.getListeCheckpoints().remove(0);
+				this.getListeCheckpoints().remove(0);
+				this.notifyObservers();
+			}
+		}
 	}
 
 	
@@ -525,6 +570,30 @@ public class Route extends Observable{
 		//Troisieme condition : si la vitesse de la moto est a null
 		if(this.getMoto().getVitesse() == 0.) { //si la moto n'avance plus
 			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Methode ifTouchCheckpoint() :
+	 * @return true si la moto toche un Checkpoint, false si non
+	 */
+	public boolean ifTouchCheckpoint() {
+		Point pt;
+		int xBG, yBG, xBD, yHG;
+		for(int i = 0; i < this.getListeCheckpoints().size(); i++) {
+			xBG = (int) this.getListeCheckpoints().get(i).getBasGauche().getX();
+			xBD = (int) this.getListeCheckpoints().get(i).getBasDroit().getX();
+			yBG = (int) this.getListeCheckpoints().get(i).getBasGauche().getY();
+			yHG = (int) this.getListeCheckpoints().get(i).getHautGauche().getY();
+			
+			if((xBG <= this.getMoto().getHautGauche().getX() && this.getMoto().getHautGauche().getX() <= xBD) || (xBG <= this.getMoto().getHautDroit().getX() && this.getMoto().getHautDroit().getX() <= xBD)) {
+				//TODO A REVOIR
+				if(yHG <= this.getMoto().getHautGauche().getY() || this.getMoto().getHautGauche().getY() <= yBG || yHG <= this.getMoto().getBasGauche().getY() || this.getMoto().getBasGauche().getY() <= yBG) {
+					System.out.print("Vous avez touche un checkpoint\n");
+					return true;
+				}
+			}
 		}
 		return false;
 	}

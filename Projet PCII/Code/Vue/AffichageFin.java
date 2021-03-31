@@ -109,7 +109,7 @@ public class AffichageFin extends JFrame{
 		g.setColor(Color.WHITE);
     	//g.drawString("Vous avez perdu car : ", AffichageJeu.LARGAFFICHAGE/2 - 70, 70);
        	g.drawString(this.getTexte(), AffichageJeu.LARGAFFICHAGE/2 - 80, 90);
-    	g.drawString("Votre score est de : ", AffichageJeu.LARGAFFICHAGE/2 - 80, 120);
+    	g.drawString("Votre score est de ", AffichageJeu.LARGAFFICHAGE/2 - 80, 120);
     	g.drawString(String.valueOf(this.route.getKilometre()), AffichageJeu.LARGAFFICHAGE/2 + 20, 120);
 
 	}

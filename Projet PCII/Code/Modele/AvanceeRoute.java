@@ -38,18 +38,21 @@ public class AvanceeRoute extends Thread{
 				route.removePointInvisibleObstacles();
 				//route.calculVitesse(seconde);
 				route.updateVitesseMoto();
+				route.avanceCheckpoint();
+				route.addCheckpoint();
+				route.removeCheckpoint();
 				//System.out.printf("dans AvanceeRoute");
 				
 				if(this.getRoute().estDansRoute()) { //si la moto est sur la route
 					if(this.getSecondeAvancee() > 150) {
 						this.setSecondeAvancee(this.getSecondeAvancee() - 20*Route.ACCELERATION);
 					}
-					Thread.sleep(seconde);
+					Thread.sleep(this.getSecondeAvancee());
 				}else{ //si la moto n'est pas sur la route
 					if(this.getSecondeAvancee() < 1500) {
 						this.setSecondeAvancee(this.getSecondeAvancee() + 10);
 					}
-					Thread.sleep(seconde);
+					Thread.sleep(this.getSecondeAvancee());
 				}
 				
 				/////////////////////////////CONDITIONS DE PERTE//////////////////////////////

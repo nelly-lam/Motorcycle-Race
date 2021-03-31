@@ -33,6 +33,11 @@ public class AvanceeTemps extends Thread{
 				for(int i = 0; i < tempsCheckPoint; i++){
 					//System.out.printf("Temps ecoule %d sec\n", this.getTempsRestant(1));
 					this.setTempsEcoule(this.getTempsRestant(1));
+					/////////////////////////////BONUS TEMPS////////////////////////////
+					if(this.getRoute().ifTouchCheckpoint()) {
+						this.setTempsEcoule(this.getTempsEcoule()+20);
+						System.out.printf("Temps ecoule %d sec\n", this.getTempsRestant(1));
+					}
 					Thread.sleep(seconde);
 				}
 				

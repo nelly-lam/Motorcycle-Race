@@ -43,5 +43,7 @@ public class Checkpoint{
 	public void setBasDroit(Point basDroit) {
 		this.basDroit = basDroit;
 	}
+	
+
 
 }
