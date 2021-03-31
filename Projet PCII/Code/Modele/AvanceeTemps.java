@@ -39,7 +39,7 @@ public class AvanceeTemps extends Thread{
 				/////////////////////////////CONDITION DE PERTE//////////////////////////////
 				if (this.getTempsEcoule() == 0) {
 					this.setRun(false);
-					new AffichageFin(this.getRoute(), "le temps est ecoule !");
+					new AffichageFin(this.getRoute(), "Le temps est écoulé !");
 				}
 
 			} catch (InterruptedException e) {

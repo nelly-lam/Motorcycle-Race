@@ -55,11 +55,11 @@ public class AvanceeRoute extends Thread{
 				/////////////////////////////CONDITIONS DE PERTE//////////////////////////////
 				if(this.getRoute().ifCollisionObstacles()) {
 					this.setRun(false);
-					new AffichageFin(this.getRoute(), "vous avez touche un obstacle !");
+					new AffichageFin(this.getRoute(), "Vous avez touché un obstacle !");
 				}
 				if(this.getRoute().ifVitesseNulle()) {
 					this.setRun(false);
-					new AffichageFin(this.getRoute(), "vous etes a l'arret !");
+					new AffichageFin(this.getRoute(), "Vous êtes a l'arrêt !");
 				}
 				
 			} catch (InterruptedException e) {

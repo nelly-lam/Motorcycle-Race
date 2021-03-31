@@ -23,10 +23,12 @@ public class AffichageFin extends JFrame{
 	
 	/*************ATTRIBUTS*************/
 	private final Route route;
+	private String texte;
 	
 	/*************CONSTRUCTEUR*************/
 	public AffichageFin(Route r, String str) {
 		this.route = r;
+		this.setTexte(str);
 		
 		this.setTitle("Fin de la partie");
     	this.setPreferredSize(new Dimension(AffichageJeu.LARGAFFICHAGE, AffichageJeu.HAUTAFFICHAGE));
@@ -76,15 +78,42 @@ public class AffichageFin extends JFrame{
 		return route;
 	}
 	
-	/*
+	public String getTexte() {
+		return texte;
+	}
+
+	public void setTexte(String texte) {
+		this.texte = texte;
+	}
+	
+	
 	public void paint(Graphics g) {
 		Image img;
+    	g.drawString("Vous avez perdu car : ", AffichageJeu.LARGAFFICHAGE/2 - 50, 50);
+    	/*
+    	g.drawString(this.getTexte(), AffichageJeu.LARGAFFICHAGE/2 - 50, 70);
+    	g.drawString("Votre score est de : ", AffichageJeu.LARGAFFICHAGE/2 - 50, 120);
+    	g.drawString(String.valueOf(this.route.getKilometre()), AffichageJeu.LARGAFFICHAGE/2 + 30, 120);
+		*/
 		try {
 			img = ImageIO.read(new File("./Code/Images/game-over_LI.jpg")).getScaledInstance(AffichageJeu.LARGAFFICHAGE, AffichageJeu.HAUTAFFICHAGE, Image.SCALE_DEFAULT);
 			g.drawImage(img, 0, 0, this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}*/
+		
+		this.paintPerdu(g);
+	}
+	
+	public void paintPerdu(Graphics g) {
+		g.setColor(Color.WHITE);
+    	//g.drawString("Vous avez perdu car : ", AffichageJeu.LARGAFFICHAGE/2 - 70, 70);
+       	g.drawString(this.getTexte(), AffichageJeu.LARGAFFICHAGE/2 - 80, 90);
+    	g.drawString("Votre score est de : ", AffichageJeu.LARGAFFICHAGE/2 - 80, 120);
+    	g.drawString(String.valueOf(this.route.getKilometre()), AffichageJeu.LARGAFFICHAGE/2 + 20, 120);
+
+	}
+
+
 
 }
