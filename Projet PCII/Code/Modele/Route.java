@@ -464,13 +464,13 @@ public class Route extends Observable{
 			if(this.getMoto().getVitesse() < VITESSEMAX) { //tant que la vitesse max n'est pas atteint
 				this.getMoto().setVitesse(this.getMoto().getVitesse() + ACCELERATION);
 				this.notifyObservers();
-				System.out.printf("acceleration : %f\n", this.getMoto().getVitesse());
+				//System.out.printf("acceleration : %f\n", this.getMoto().getVitesse());
 			}
 		}else{
 			if(this.getMoto().getVitesse() > 0) {
 				this.getMoto().setVitesse(this.getMoto().getVitesse() - ACCELERATION);
 				this.notifyObservers();
-				System.out.printf("deceleration : %f\n", this.getMoto().getVitesse());
+				//System.out.printf("deceleration : %f\n", this.getMoto().getVitesse());
 			}
 		}
 	}
@@ -495,12 +495,20 @@ public class Route extends Observable{
 			//System.out.printf("Point obstacle %d : (%d, %d)\n", i, x, y);
 			//System.out.printf("Point moto : (%d, %d)\n", this.getMoto().getPositionX(), this.getMoto().getPositionY());
 			//si les coordonnees de la moto == les coordonnes d'un obstacle
+			if(this.getMoto().getHautGauche().getX() <= pt.x && pt.x <= this.getMoto().getHautDroit().getX()) {
+				System.out.printf("Point obstacle %d : (%d, %d)\n", i, x, y);
+				System.out.printf("Point moto : (%d, %d)\n", this.getMoto().getPositionX(), this.getMoto().getPositionY());
+				if(this.getMoto().getHautGauche().getY() <= pt.y && pt.y <= this.getMoto().getBasGauche().getY()) {
+					return true;
+				}
+			}
+			/*
 			if(pt.y == this.getMoto().getPositionY() && pt.x == this.getMoto().getPositionX()) {
 				//System.out.printf("Point obstacle %d : (%d, %d)\n", i, x, y);
 				//System.out.printf("Point moto : (%d, %d)\n", this.getMoto().getPositionX(), this.getMoto().getPositionY());
 				//System.out.printf("Touche coule");
 				return true;
-			}
+			}*/
 		}
 		return false;
 	}

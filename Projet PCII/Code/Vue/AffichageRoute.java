@@ -42,7 +42,7 @@ public class AffichageRoute extends JPanel implements Observer{
         background.setBounds(0,0,AffichageJeu.LARGAFFICHAGE, Route.POSITIONHORIZON);
         panel.add(background);
     	*/
-        
+
     	this.add(panel);
     	
     }
@@ -89,10 +89,14 @@ public class AffichageRoute extends JPanel implements Observer{
 
 
     public void paintMoto(Graphics g) throws IOException {
-    	//g.setColor(Color.RED);
+    	g.setColor(Color.RED);
 		Image img1 = ImageIO.read(new File("./Code/Images/moto.png")).getScaledInstance(30, 30, Image.SCALE_DEFAULT);
-		g.drawImage(img1, this.getMoto().getPositionX() - 15, this.getMoto().getPositionY() - 15, this);
     	//g.drawString("X", this.getMoto().getPositionX(), this.getMoto().getPositionY());
+		g.fillRect((int) this.getMoto().getHautGauche().getX(), (int) this.getMoto().getHautGauche().getY(),
+					(int) this.getMoto().getBasDroit().getX() - (int) this.getMoto().getHautGauche().getX(), (int) this.getMoto().getBasDroit().getY() - (int) this.getMoto().getHautGauche().getY());
+		g.drawImage(img1, this.getMoto().getPositionX() - 15, this.getMoto().getPositionY() - 15, this);
+		//System.out.printf("Point hautGauche = (%d, %d)\n", (int) this.getMoto().getHautGauche().getX(), (int) this.getMoto().getHautGauche().getY());
+		//System.out.printf("Point basDroit = (%d, %d)\n", (int) this.getMoto().getBasDroit().getX(), (int) this.getMoto().getBasDroit().getY());
     }
     
     public void paintRoute(Graphics g) {
