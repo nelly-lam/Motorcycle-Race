@@ -21,15 +21,15 @@ public class Route extends Observable{
 	public final static int bordureMinX = 150;
 	public final static int plageLargeurRoute = LARGEURMAXROUTE - LARGEURMINROUTE;
 	
-	//public final static int departXDroit = Moto.POSITIONXMOTO + LARGEURMAXROUTE/2 + 50;
 	public final static int departXGauche = Moto.POSITIONXMOTO - LARGEURMAXROUTE/2 - 40;
 	
 	public final static int TAILLEAVANCEE = 10;
 	public final static int ACCELERATION = 5;
 	
 	public final static int VITESSEMAX = 300;
-	public final static int graduationKilometre = 400; //(500 pixels en ordonnee = 1km)
+	public final static int graduationKilometre = 1000; //(1000 pixels en ordonnee = 1km)
 	
+	public final static int LARGCHECKPOINT = 30;
 	
 	/****************ATTRIBUTS****************/
 	private ArrayList<Point> listePointsG;
@@ -40,7 +40,7 @@ public class Route extends Observable{
 	private int kilometre;
 	
 	private ArrayList<Point> listeObstacles;
-	private ArrayList<Point> listeCheckpoints;
+	private ArrayList<Checkpoint> listeCheckpoints;
 	
 	
 	/****************CONSTRUCTEUR****************/
@@ -99,9 +99,10 @@ public class Route extends Observable{
 		}
 		this.affiche_liste(this.getListeObstacles(), "obstacles");
 		
+		
 		///////////////////////////INITIALISATION DES CHECKPOINTS/////////////////////////////////
-		this.listeCheckpoints = new ArrayList<Point>();
-		Point newCheckpoints;
+		this.listeCheckpoints = new ArrayList<Checkpoint>();
+
 		
 	}
 	
@@ -135,10 +136,10 @@ public class Route extends Observable{
 	public void setListeObstacles(ArrayList<Point> listeObstacles) {
 		this.listeObstacles = listeObstacles;
 	}
-	public ArrayList<Point> getListeCheckpoints() {
+	public ArrayList<Checkpoint> getListeCheckpoints() {
 		return listeCheckpoints;
 	}
-	public void setListeCheckpoints(ArrayList<Point> listeCheckPoints) {
+	public void setListeCheckpoints(ArrayList<Checkpoint> listeCheckPoints) {
 		this.listeCheckpoints = listeCheckPoints;
 	}
 	
@@ -208,8 +209,6 @@ public class Route extends Observable{
 			newListeD.add(new Point(x, y));
 		}
 		this.setListePointsD(newListeD);
-		
-		this.setKilometre(this.getKilometre() + 1);
 		
 		this.notifyObservers();
 	}
@@ -339,6 +338,11 @@ public class Route extends Observable{
 		}
 	}
 
+	
+	public void avanceKilometre() {
+		this.setKilometre(this.getKilometre()+TAILLEAVANCEE);
+		System.out.printf("Kilometres parcourus = %d\n", this.getKilometre());
+	}
 
 	
 	
@@ -448,11 +452,10 @@ public class Route extends Observable{
 	}
 	
 	
-	/*
-	public float calculVitesse() {
-		
+	public float calculVitesse(int seconde) {
+		return this.getKilometre()/seconde;
 	}
-	*/
+
 	
 	/**
 	 * methode updateVitesseMoto():

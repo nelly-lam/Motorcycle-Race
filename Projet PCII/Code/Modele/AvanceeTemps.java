@@ -5,7 +5,7 @@ import Vue.AffichageFin;
 public class AvanceeTemps extends Thread{
 	
 	/****************CONSTANTES****************/
-	public final static int tempsCheckPoint = 21;
+	public final static int tempsCheckPoint = 31;
 	public final static int seconde = 1000; //(1s = 1000ms)
 	
 	/****************ATTRIBUTS****************/

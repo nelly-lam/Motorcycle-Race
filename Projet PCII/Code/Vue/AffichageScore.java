@@ -42,7 +42,7 @@ public class AffichageScore extends JPanel implements Observer{
 		this.nbKilometre.setText(String.valueOf(this.route.getKilometre()));
 		this.score.setText("Score : ");
 		this.nbScore.setText(String.valueOf(this.route.getKilometre()));
-		this.nbVitesse.setText("Vitesse = ");
+		this.vitesse.setText("Vitesse = ");
 		this.nbVitesse.setText(String.valueOf(this.getMoto().getVitesse()));
 		
 		information.add(kilometre);

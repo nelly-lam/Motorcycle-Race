@@ -89,7 +89,7 @@ public class AffichageRoute extends JPanel implements Observer{
 
 
     public void paintMoto(Graphics g) throws IOException {
-    	g.setColor(Color.RED);
+    	g.setColor(Color.gray);
 		Image img1 = ImageIO.read(new File("./Code/Images/moto.png")).getScaledInstance(30, 30, Image.SCALE_DEFAULT);
     	//g.drawString("X", this.getMoto().getPositionX(), this.getMoto().getPositionY());
 		g.fillRect((int) this.getMoto().getHautGauche().getX(), (int) this.getMoto().getHautGauche().getY(),
@@ -140,7 +140,7 @@ public class AffichageRoute extends JPanel implements Observer{
     public void paintCheckpoints(Graphics g) {
     	g.setColor(Color.red);
     	for(int i = 0; i < this.getRoute().getListeCheckpoints().size()-1; i++) {
-    		g.drawString("X", (int) this.getRoute().getListeCheckpoints().get(i).getX(), (int) this.getRoute().getListeCheckpoints().get(i).getY());
+    		//g.drawString("X", (int) this.getRoute().getListeCheckpoints().get(i).getX(), (int) this.getRoute().getListeCheckpoints().get(i).getY());
     	}
     }
     

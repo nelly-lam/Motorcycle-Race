@@ -5,7 +5,7 @@ import Vue.AffichageFin;
 public class AvanceeRoute extends Thread{
 	
 	/****************CONSTANTES****************/
-	
+	public final static int seconde = 1000;
 	/****************ATTRIBUTS****************/
 	private Route route;
 	private boolean run;
@@ -29,12 +29,14 @@ public class AvanceeRoute extends Thread{
 	public void run() {
 		while(this.getRun()) { //boucle infinie
 			try {
+				route.avanceKilometre();
 				route.avanceRoute();
 				route.addPointInvisible2();
 				route.removePointInvisible();
 				route.avanceObstacles();
 				route.addPointInvisibleObstacles();
 				route.removePointInvisibleObstacles();
+				//route.calculVitesse(seconde);
 				route.updateVitesseMoto();
 				//System.out.printf("dans AvanceeRoute");
 				
@@ -42,12 +44,12 @@ public class AvanceeRoute extends Thread{
 					if(this.getSecondeAvancee() > 150) {
 						this.setSecondeAvancee(this.getSecondeAvancee() - 20*Route.ACCELERATION);
 					}
-					Thread.sleep(secondeAvancee);
+					Thread.sleep(seconde);
 				}else{ //si la moto n'est pas sur la route
 					if(this.getSecondeAvancee() < 1500) {
 						this.setSecondeAvancee(this.getSecondeAvancee() + 10);
 					}
-					Thread.sleep(secondeAvancee);
+					Thread.sleep(seconde);
 				}
 				
 				/////////////////////////////CONDITIONS DE PERTE//////////////////////////////
@@ -57,7 +59,7 @@ public class AvanceeRoute extends Thread{
 				}
 				if(this.getRoute().ifVitesseNulle()) {
 					this.setRun(false);
-					new AffichageFin(this.getRoute(), "vous etes en arret !");
+					new AffichageFin(this.getRoute(), "vous etes a l'arret !");
 				}
 				
 			} catch (InterruptedException e) {
