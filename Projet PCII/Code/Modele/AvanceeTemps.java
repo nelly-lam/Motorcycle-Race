@@ -7,6 +7,7 @@ public class AvanceeTemps extends Thread{
 	/****************CONSTANTES****************/
 	public final static int tempsCheckPoint = 21;
 	public final static int seconde = 1000; //(1s = 1000ms)
+	public final static int graduationTemps = 10000;
 	
 	/****************ATTRIBUTS****************/
 	private boolean run;
@@ -30,22 +31,29 @@ public class AvanceeTemps extends Thread{
 	public void run() {
 		while(this.getRun()) { //boucle infinie
 			try {
-				for(int i = 0; i < tempsCheckPoint; i++){
-					//System.out.printf("Temps ecoule %d sec\n", this.getTempsRestant(1));
-					this.setTempsEcoule(this.getTempsRestant(1));
-					/////////////////////////////BONUS TEMPS////////////////////////////
-					if(this.getRoute().ifTouchCheckpoint()) {
-						this.setTempsEcoule(tempsCheckPoint);
-						System.out.printf("Temps ecoule %d sec\n", this.getTempsRestant(1));
-					}
-					Thread.sleep(seconde);
+				//System.out.printf("Temps ecoule %d sec\n", this.getTempsRestant(1));
+				int diviseTempsBonus = 1;
+				int gradTemps = graduationTemps;
+				this.setTempsEcoule(this.getTempsRestant(1));
+				
+				/////////////////////////////BONUS TEMPS////////////////////////////
+				if(this.getRoute().ifTouchCheckpoint()) {
+					this.setTempsEcoule(this.getTempsRestant(1) + (int) (tempsCheckPoint/diviseTempsBonus));
+					System.out.printf("Temps ecoule %d sec\n", this.getTempsRestant(1));
 				}
 				
+				gradTemps -= seconde;
+				if(gradTemps == 0) {
+					diviseTempsBonus += 1;
+				}
+
 				/////////////////////////////CONDITION DE PERTE//////////////////////////////
 				if (this.getTempsEcoule() == 0) {
 					this.setRun(false);
 					new AffichageFin(this.getRoute(), "Le temps est écoulé !");
 				}
+					
+				Thread.sleep(seconde);
 
 			} catch (InterruptedException e) {
 				e.printStackTrace();

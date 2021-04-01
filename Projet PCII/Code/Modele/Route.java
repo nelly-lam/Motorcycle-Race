@@ -589,7 +589,7 @@ public class Route extends Observable{
 			
 			if((xBG <= this.getMoto().getHautGauche().getX() && this.getMoto().getHautGauche().getX() <= xBD) || (xBG <= this.getMoto().getHautDroit().getX() && this.getMoto().getHautDroit().getX() <= xBD)) {
 				//TODO A REVOIR
-				if(yHG <= this.getMoto().getHautGauche().getY() || this.getMoto().getHautGauche().getY() <= yBG || yHG <= this.getMoto().getBasGauche().getY() || this.getMoto().getBasGauche().getY() <= yBG) {
+				if((yHG <= this.getMoto().getHautGauche().getY() && this.getMoto().getHautGauche().getY() <= yBG) || (yHG <= this.getMoto().getBasGauche().getY() && this.getMoto().getBasGauche().getY() <= yBG)) {
 					System.out.print("Vous avez touche un checkpoint\n");
 					return true;
 				}

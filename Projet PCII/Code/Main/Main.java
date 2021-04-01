@@ -26,10 +26,10 @@ public class Main {
 		affichageJeu.addKeyListener(controlMoto);
 		
 		if(!temps.getRun()) {
-			ar.stop();
+			ar.setRun(false);
 		}
 		if(!ar.getRun()) {
-			temps.stop();
+			temps.setRun(true);
 		}
 
 	}
