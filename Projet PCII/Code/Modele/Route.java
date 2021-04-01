@@ -579,7 +579,7 @@ public class Route extends Observable{
 	 * @return true si la moto toche un Checkpoint, false si non
 	 */
 	public boolean ifTouchCheckpoint() {
-		Point pt;
+		//Point pt;
 		int xBG, yBG, xBD, yHG;
 		for(int i = 0; i < this.getListeCheckpoints().size(); i++) {
 			xBG = (int) this.getListeCheckpoints().get(i).getBasGauche().getX();
