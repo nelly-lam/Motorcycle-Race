@@ -44,6 +44,7 @@ public class Moto extends Observable{
 
 	}
 	
+	
 	/****************METHODES****************/
 	public int getPositionX() { return positionX; }
 	public int getPositionY() { return positionY; }
