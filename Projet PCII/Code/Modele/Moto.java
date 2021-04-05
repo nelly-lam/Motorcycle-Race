@@ -7,14 +7,14 @@ public class Moto extends Observable{
 	/****************CONSTANTES****************/
 	public final static int POSITIONXMOTO = Vue.AffichageJeu.LARGAFFICHAGE/2;
 	public final static int LARGZONEMOTO = 10;
-	public final static int HAUTZONEMOTO = 15;
+	public final static int HAUTZONEMOTO = 20;
 	public final static int TAILLEDEPLACEMENT = 5;
 	
 	/****************ATTRIBUTS****************/
 	private int positionX;
 	private int positionY;
 	
-	//Zone rectangulaire autour de la moto
+	//Zone rectangulaire autour de la moto, zone de collision
 	private Point hautGauche;
 	private Point hautDroit;
 	private Point basGauche;
@@ -85,7 +85,11 @@ public class Moto extends Observable{
 	public void setPositionY(int positionY) { this.positionY = positionY; }
 	public void setVitesse(float vitesse) { this.vitesse = vitesse; }
 	
-	
+	/**
+	 * Methode deplaceZoneMoto() :
+	 * deplace d'un nombre "taille" de pixel la position de la moto
+	 * @param taille
+	 */
 	public void deplaceZoneMoto(int taille) {
 		this.setHautGauche(new Point((int) this.getHautGauche().getX() + taille, (int) this.getHautGauche().getY()));
 		this.setHautDroit(new Point((int) this.getHautDroit().getX() + taille, (int) this.getHautDroit().getY()));

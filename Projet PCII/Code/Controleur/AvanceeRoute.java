@@ -43,6 +43,8 @@ public class AvanceeRoute extends Thread{
 				route.removeCheckpoint();
 				//System.out.printf("dans AvanceeRoute");
 
+				this.getRoute().ifTouchCheckpoint();
+				
 				if(this.getRoute().estDansRoute()) { //si la moto est sur la route
 					if(this.getSecondeAvancee() > 150) {
 						this.setSecondeAvancee(this.getSecondeAvancee() - 20*Route.ACCELERATION);
@@ -68,6 +70,7 @@ public class AvanceeRoute extends Thread{
 					this.setRun(false);
 					new AffichageFin(this.getRoute(), "Vous êtes a l'arrêt !");
 				}
+
 				
 			} catch (InterruptedException e) {
 				e.printStackTrace();

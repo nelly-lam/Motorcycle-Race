@@ -32,20 +32,6 @@ public class AffichageRoute extends JPanel implements Observer{
     	this.route.addObserver(this);
     	
     	JPanel panel = new JPanel();
-    	
-    	/*
-        JLabel title = new JLabel("Temps restant : ");
-        title.setBounds(AffichageJeu.LARGAFFICHAGE/2+40, 200, 15, 80); //placer le label dans la fenetre
-        title.setForeground(Color.black);
-        panel.add(title);
-
-        ImageIcon img = new ImageIcon(new ImageIcon("./Code/Images/fuji.png").getImage().getScaledInstance(AffichageJeu.LARGAFFICHAGE - 50, Route.POSITIONHORIZON, Image.SCALE_DEFAULT));
-        JLabel background = new JLabel(img);
-        background.setBounds(0,0,AffichageJeu.LARGAFFICHAGE, Route.POSITIONHORIZON);
-        panel.add(background);
-    	*/
-    	
-
     	this.add(panel);
     	
     }
@@ -55,6 +41,8 @@ public class AffichageRoute extends JPanel implements Observer{
 	public Route getRoute() { return route; }
 	public AvanceeTemps getTemps() { return temps; }
 	public void setTemps(AvanceeTemps tps) { this.temps = tps; }
+	
+	
 	
 	private void dessinerEcranPause(Graphics g){
 		g.setColor(Color.RED);
@@ -70,47 +58,54 @@ public class AffichageRoute extends JPanel implements Observer{
     	
     	paintGrass(g);
     	paintRoute(g);
-    	/*
-    	try {
-			paintHorizon(g);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
+    	
     	try {
 			paintObstacles(g);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	paintTimer(g);
+
     	paintCheckpoints(g);
     	
     	try {
+			paintHorizon(g);
 			paintMoto(g);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
     	
+    	paintTimer(g);
+    	
     }
 
+	/**
+	 * Methode paintGrass() : colorie la pelouse
+	 * @param g
+	 */
 	public void paintGrass(Graphics g) {
 	   	g.setColor(Color.green);
     	g.fillRect(0, Route.POSITIONHORIZON, AffichageJeu.LARGAFFICHAGE, AffichageJeu.HAUTAFFICHAGE);
 	}
 
+	/**
+	 * Methode paintMoto() : affiche la moto et sa zone de collision
+	 * @param g
+	 * @throws IOException
+	 */
     public void paintMoto(Graphics g) throws IOException {
     	g.setColor(Color.blue);
 		Image img1 = ImageIO.read(new File("./Code/Images/moto.png")).getScaledInstance(30, 30, Image.SCALE_DEFAULT);
-    	//g.drawString("X", this.getMoto().getPositionX(), this.getMoto().getPositionY());
 		g.drawRect((int) this.getMoto().getHautGauche().getX(), (int) this.getMoto().getHautGauche().getY(),
 					(int) this.getMoto().getBasDroit().getX() - (int) this.getMoto().getHautGauche().getX(), (int) this.getMoto().getBasDroit().getY() - (int) this.getMoto().getHautGauche().getY());
 		g.drawImage(img1, this.getMoto().getPositionX() - 15, this.getMoto().getPositionY() - 15, this);
-		//System.out.printf("Point hautGauche = (%d, %d)\n", (int) this.getMoto().getHautGauche().getX(), (int) this.getMoto().getHautGauche().getY());
-		//System.out.printf("Point basDroit = (%d, %d)\n", (int) this.getMoto().getBasDroit().getX(), (int) this.getMoto().getBasDroit().getY());
+		
+    	//g.drawString("X", this.getMoto().getPositionX(), this.getMoto().getPositionY());
     }
     
+    /**
+     * Methode paintRoute() : colorie la route en gris
+     * @param g
+     */
     public void paintRoute(Graphics g) {
     	g.setColor(Color.gray);
     	
@@ -140,34 +135,28 @@ public class AffichageRoute extends JPanel implements Observer{
     	
     	g.fillPolygon(pointsX, pointsY, pointsX.length);
     	
-    	/*
-    	for(int i = 0; i < this.getRoute().getListePointsG().size()-1; i++) {
-    		g.drawLine( (int) this.getRoute().getListePointsG().get(i).getX(), 
-    					(int) this.getRoute().getListePointsG().get(i).getY(),
-    					(int) this.getRoute().getListePointsG().get(i+1).getX(),
-    					(int) this.getRoute().getListePointsG().get(i+1).getY() );
-    	}
-    	
-    	for(int i = 0; i < this.getRoute().getListePointsD().size()-1; i++) {
-    		g.drawLine( (int) this.getRoute().getListePointsD().get(i).getX(), 
-    					(int) this.getRoute().getListePointsD().get(i).getY(),
-    					(int) this.getRoute().getListePointsD().get(i+1).getX(),
-    					(int) this.getRoute().getListePointsD().get(i+1).getY() );
-    	}
-    	*/
+
     }
     
-    
+    /**
+     * Methode paintHorizon() : affiche l'image de l'horizon
+     * @param g
+     * @throws IOException
+     */
     public void paintHorizon(Graphics g) throws IOException {
     	//g.setColor(Color.blue);
     	//g.fillRect(0, 0, AffichageJeu.LARGAFFICHAGE, Route.POSITIONHORIZON);
+    	//g.drawLine( 0, Modele.Route.POSITIONHORIZON, Vue.AffichageJeu.LARGAFFICHAGE, Modele.Route.POSITIONHORIZON);
 
 		Image img = ImageIO.read(new File("./Code/Images/fuji.png")).getScaledInstance(AffichageJeu.LARGAFFICHAGE, Route.POSITIONHORIZON, Image.SCALE_DEFAULT);
 		g.drawImage(img, 0, 0, this);
-    	//g.drawLine( 0, Modele.Route.POSITIONHORIZON, Vue.AffichageJeu.LARGAFFICHAGE, Modele.Route.POSITIONHORIZON);
     }
 
-    
+    /**
+     * Methode paintObstacle() : affiche les obstacles de la route
+     * @param g
+     * @throws IOException
+     */
     public void paintObstacles(Graphics g) throws IOException {
     	g.setColor(Color.red);
     	//Image img;
@@ -178,6 +167,10 @@ public class AffichageRoute extends JPanel implements Observer{
     	}
     }
     
+    /**
+     * Methode paintCheckpoints() : affiche les checkpoints de la route
+     * @param g
+     */
     public void paintCheckpoints(Graphics g) {
     	g.setColor(Color.orange);
     	if(this.getRoute().getListeCheckpoints().size() != 0) {
@@ -190,7 +183,12 @@ public class AffichageRoute extends JPanel implements Observer{
     	}
     }
     
+    /**
+     * Methode paintTimer() : affiche le temps restant avant la fin de la partie
+     * @param g
+     */
     public void paintTimer(Graphics g) {
+    	g.setColor(Color.red);
     	g.drawString("Temps restant : ", AffichageJeu.LARGAFFICHAGE/2 - 50, 23);
     	g.drawString(String.valueOf(this.getTemps().getTempsEcoule()), AffichageJeu.LARGAFFICHAGE/2+40, 23);
     }
