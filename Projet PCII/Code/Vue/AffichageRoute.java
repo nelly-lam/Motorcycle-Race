@@ -3,11 +3,13 @@ package Vue;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import Modele.AvanceeTemps;
+
+import Controleur.AvanceeTemps;
 import Modele.Moto;
 import Modele.Route;
 
@@ -42,6 +44,7 @@ public class AffichageRoute extends JPanel implements Observer{
         background.setBounds(0,0,AffichageJeu.LARGAFFICHAGE, Route.POSITIONHORIZON);
         panel.add(background);
     	*/
+    	
 
     	this.add(panel);
     	
@@ -65,13 +68,16 @@ public class AffichageRoute extends JPanel implements Observer{
     	super.paint(g);
     	super.repaint();
     	
+    	paintGrass(g);
     	paintRoute(g);
+    	/*
     	try {
 			paintHorizon(g);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+		
     	try {
 			paintObstacles(g);
 		} catch (IOException e) {
@@ -89,12 +95,16 @@ public class AffichageRoute extends JPanel implements Observer{
     	
     }
 
+	public void paintGrass(Graphics g) {
+	   	g.setColor(Color.green);
+    	g.fillRect(0, Route.POSITIONHORIZON, AffichageJeu.LARGAFFICHAGE, AffichageJeu.HAUTAFFICHAGE);
+	}
 
     public void paintMoto(Graphics g) throws IOException {
-    	g.setColor(Color.gray);
+    	g.setColor(Color.blue);
 		Image img1 = ImageIO.read(new File("./Code/Images/moto.png")).getScaledInstance(30, 30, Image.SCALE_DEFAULT);
     	//g.drawString("X", this.getMoto().getPositionX(), this.getMoto().getPositionY());
-		g.fillRect((int) this.getMoto().getHautGauche().getX(), (int) this.getMoto().getHautGauche().getY(),
+		g.drawRect((int) this.getMoto().getHautGauche().getX(), (int) this.getMoto().getHautGauche().getY(),
 					(int) this.getMoto().getBasDroit().getX() - (int) this.getMoto().getHautGauche().getX(), (int) this.getMoto().getBasDroit().getY() - (int) this.getMoto().getHautGauche().getY());
 		g.drawImage(img1, this.getMoto().getPositionX() - 15, this.getMoto().getPositionY() - 15, this);
 		//System.out.printf("Point hautGauche = (%d, %d)\n", (int) this.getMoto().getHautGauche().getX(), (int) this.getMoto().getHautGauche().getY());
@@ -102,7 +112,35 @@ public class AffichageRoute extends JPanel implements Observer{
     }
     
     public void paintRoute(Graphics g) {
-    	g.setColor(Color.green);
+    	g.setColor(Color.gray);
+    	
+    	///////////////////////////////////CREATION D'UN POLYGONE/////////////////////////////
+    	int[] pointsX = new int[this.getRoute().getListePointsG().size() + this.getRoute().getListePointsD().size()];
+    	int[] pointsY = new int[this.getRoute().getListePointsG().size() + this.getRoute().getListePointsD().size()];
+
+    	int compteur = 0;
+    	
+    	/*on ajoute tous les abscisses de listePointsG dans pointsX et ordonnees dans pointsY,
+    	 * en partant du premier point de listePointsG
+    	 */
+    	for(int i = 0; i < this.getRoute().getListePointsG().size(); i++) {
+    		pointsX[compteur] = (int) this.getRoute().getListePointsG().get(i).getX();
+    		pointsY[compteur] = (int) this.getRoute().getListePointsG().get(i).getY();
+    		compteur++;
+    	}
+    	
+    	/*on ajoute tous les abscisses de listePointsD dans pointX et ordonnees dans pointsY,
+    	 * en partant du dernier point de listePointD
+    	 */
+    	for(int j = this.getRoute().getListePointsD().size() - 1; j >= 0; j--) {
+    		pointsX[compteur] = (int) this.getRoute().getListePointsD().get(j).getX();
+    		pointsY[compteur] = (int) this.getRoute().getListePointsD().get(j).getY();
+    		compteur++;
+    	}
+    	
+    	g.fillPolygon(pointsX, pointsY, pointsX.length);
+    	
+    	/*
     	for(int i = 0; i < this.getRoute().getListePointsG().size()-1; i++) {
     		g.drawLine( (int) this.getRoute().getListePointsG().get(i).getX(), 
     					(int) this.getRoute().getListePointsG().get(i).getY(),
@@ -116,6 +154,7 @@ public class AffichageRoute extends JPanel implements Observer{
     					(int) this.getRoute().getListePointsD().get(i+1).getX(),
     					(int) this.getRoute().getListePointsD().get(i+1).getY() );
     	}
+    	*/
     }
     
     

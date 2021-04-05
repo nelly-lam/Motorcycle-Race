@@ -5,7 +5,8 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import Modele.AvanceeTemps;
+
+import Controleur.AvanceeTemps;
 
 public class AffichageTimer extends JPanel implements Observer{
 	

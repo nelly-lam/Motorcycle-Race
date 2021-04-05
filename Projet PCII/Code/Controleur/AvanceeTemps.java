@@ -1,13 +1,13 @@
-package Modele;
-
+package Controleur;
+import Modele.Route;
 import Vue.AffichageFin;
 
 public class AvanceeTemps extends Thread{
 	
 	/****************CONSTANTES****************/
-	public final static int tempsCheckPoint = 21;
+	public final static int tempsCheckPoint = 31;
 	public final static int seconde = 1000; //(1s = 1000ms)
-	public final static int graduationTemps = 10000;
+	public final static int graduationTemps = 8000;
 	
 	/****************ATTRIBUTS****************/
 	private boolean run;
@@ -38,8 +38,10 @@ public class AvanceeTemps extends Thread{
 				
 				/////////////////////////////BONUS TEMPS////////////////////////////
 				if(this.getRoute().ifTouchCheckpoint()) {
-					this.setTempsEcoule(this.getTempsRestant(1) + (int) (tempsCheckPoint/diviseTempsBonus));
-					System.out.printf("Temps ecoule %d sec\n", this.getTempsRestant(1));
+					System.out.print("Checkpoint!\n");
+					this.setTempsEcoule(tempsCheckPoint);
+					//System.out.printf("Nouveau temps %d sec\n", this.getTempsRestant(1) + (int) (tempsCheckPoint/diviseTempsBonus));
+					//System.out.printf("Temps ecoule %d sec\n", this.getTempsRestant(1));
 				}
 				
 				gradTemps -= seconde;

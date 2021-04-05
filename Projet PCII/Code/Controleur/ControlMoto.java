@@ -2,8 +2,7 @@ package Controleur;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import Modele.AvanceeRoute;
-import Modele.AvanceeTemps;
+
 import Modele.Moto;
 
 public class ControlMoto implements KeyListener{
@@ -51,6 +50,7 @@ public class ControlMoto implements KeyListener{
 			   }
 		   break;*/
 		  }
+		//this.arretJeu();
 	}
 
 	@Override
@@ -74,6 +74,15 @@ public class ControlMoto implements KeyListener{
 
 	public void setAr(AvanceeRoute ar) {
 		this.ar = ar;
+	}
+	
+	public void arretJeu() {
+		if(!temps.getRun()) {
+			ar.setRun(false);
+		}
+		if(!ar.getRun()) {
+			temps.setRun(true);
+		}
 	}
 
 }

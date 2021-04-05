@@ -4,9 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import Controleur.AvanceeRoute;
+import Controleur.AvanceeTemps;
 import Controleur.ControlMoto;
-import Modele.AvanceeRoute;
-import Modele.AvanceeTemps;
 import Modele.Moto;
 import Modele.Route;
 

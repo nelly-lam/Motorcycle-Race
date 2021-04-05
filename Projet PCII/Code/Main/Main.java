@@ -1,15 +1,14 @@
 package Main;
 
+import Controleur.AvanceeRoute;
+import Controleur.AvanceeTemps;
 import Controleur.ControlMoto;
-import Modele.AvanceeRoute;
-import Modele.AvanceeTemps;
 import Modele.Moto;
 import Modele.Route;
 import Vue.AffichageJeu;
 
 public class Main {
 
-	@SuppressWarnings("deprecation")
 	public static void main(String [] args) {
 		
 		Moto moto = new Moto();
@@ -25,12 +24,6 @@ public class Main {
 		ControlMoto controlMoto = new ControlMoto(moto, temps, ar);
 		affichageJeu.addKeyListener(controlMoto);
 		
-		if(!temps.getRun()) {
-			ar.setRun(false);
-		}
-		if(!ar.getRun()) {
-			temps.setRun(true);
-		}
 
 	}
 	

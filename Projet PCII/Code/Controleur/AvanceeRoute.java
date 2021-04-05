@@ -1,5 +1,5 @@
-package Modele;
-
+package Controleur;
+import Modele.Route;
 import Vue.AffichageFin;
 
 public class AvanceeRoute extends Thread{
@@ -37,20 +37,24 @@ public class AvanceeRoute extends Thread{
 				route.addPointInvisibleObstacles();
 				route.removePointInvisibleObstacles();
 				//route.calculVitesse(seconde);
-				route.updateVitesseMoto();
+				route.updateVitesseMoto(secondeAvancee);
 				route.avanceCheckpoint();
 				route.addCheckpoint();
 				route.removeCheckpoint();
 				//System.out.printf("dans AvanceeRoute");
-				
+
 				if(this.getRoute().estDansRoute()) { //si la moto est sur la route
 					if(this.getSecondeAvancee() > 150) {
 						this.setSecondeAvancee(this.getSecondeAvancee() - 20*Route.ACCELERATION);
+						//System.out.printf("secondeAvancee accé = %d\n", this.getSecondeAvancee() - 20*Route.ACCELERATION);
+						//route.updateVitesseMoto(secondeAvancee);
 					}
 					Thread.sleep(this.getSecondeAvancee());
 				}else{ //si la moto n'est pas sur la route
 					if(this.getSecondeAvancee() < 1500) {
 						this.setSecondeAvancee(this.getSecondeAvancee() + 10);
+						//System.out.printf("secondeAvancee décé = %d\n", this.getSecondeAvancee() + 10);
+						//route.updateVitesseMoto(secondeAvancee);
 					}
 					Thread.sleep(this.getSecondeAvancee());
 				}
