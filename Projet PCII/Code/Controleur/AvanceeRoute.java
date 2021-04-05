@@ -30,14 +30,17 @@ public class AvanceeRoute extends Thread{
 		while(this.getRun()) { //boucle infinie
 			try {
 				route.avanceKilometre();
+				
 				route.avanceRoute();
 				route.addPointInvisible2();
 				route.removePointInvisible();
+				
 				route.avanceObstacles();
 				route.addPointInvisibleObstacles();
 				route.removePointInvisibleObstacles();
-				//route.calculVitesse(seconde);
+				
 				route.updateVitesseMoto(secondeAvancee);
+				
 				route.avanceCheckpoint();
 				route.addCheckpoint();
 				route.removeCheckpoint();
@@ -48,15 +51,11 @@ public class AvanceeRoute extends Thread{
 				if(this.getRoute().estDansRoute()) { //si la moto est sur la route
 					if(this.getSecondeAvancee() > 150) {
 						this.setSecondeAvancee(this.getSecondeAvancee() - 20*Route.ACCELERATION);
-						//System.out.printf("secondeAvancee accé = %d\n", this.getSecondeAvancee() - 20*Route.ACCELERATION);
-						//route.updateVitesseMoto(secondeAvancee);
 					}
 					Thread.sleep(this.getSecondeAvancee());
 				}else{ //si la moto n'est pas sur la route
 					if(this.getSecondeAvancee() < 1500) {
 						this.setSecondeAvancee(this.getSecondeAvancee() + 10);
-						//System.out.printf("secondeAvancee décé = %d\n", this.getSecondeAvancee() + 10);
-						//route.updateVitesseMoto(secondeAvancee);
 					}
 					Thread.sleep(this.getSecondeAvancee());
 				}

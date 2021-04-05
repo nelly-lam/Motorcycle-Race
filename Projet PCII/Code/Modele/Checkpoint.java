@@ -5,6 +5,7 @@ import java.awt.Point;
 public class Checkpoint{
 	
 	/****************ATTRIBUTS****************/
+	//Zone rectangulaire qui forme un Checkpoint
 	private Point hautGauche;
 	private Point hautDroit;
 	private Point basGauche;

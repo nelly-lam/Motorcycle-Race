@@ -13,7 +13,7 @@ public class Main {
 		
 		Moto moto = new Moto();
 		Route route = new Route(moto);
-		//MyTimer temps = new MyTimer(AcanceeTemps.tempsCheckPoint);
+		
 		AvanceeTemps temps = new AvanceeTemps(route);
 		temps.start();
 		AvanceeRoute ar = new AvanceeRoute(route);

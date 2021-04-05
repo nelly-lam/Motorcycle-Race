@@ -8,7 +8,7 @@ public class AvanceeTemps extends Thread{
 	public final static int tempsCheckPoint = 30;
 	public final static int seconde = 1000; //(1s = 1000ms)
 	public final static int graduationTemps = 10000;
-	public final static int tempsBonus = 20;
+	public final static int tempsBonusDepart = 20;
 	
 	/****************ATTRIBUTS****************/
 	private boolean run;
@@ -41,20 +41,16 @@ public class AvanceeTemps extends Thread{
 				
 				/////////////////////////////BONUS TEMPS////////////////////////////
 				if(this.getRoute().getCheckpointTouched()) {
-					//System.out.print("Checkpoint!\n");
-					//System.out.printf("Bonus = %d\n", tempsBonus/this.diviseTempsBonus);
-					if(tempsBonus/this.diviseTempsBonus >= 10) {
-						this.setTempsEcoule(this.getTempsRestant(0) + tempsBonus/this.diviseTempsBonus);
-					}else {
-						this.setTempsEcoule(this.getTempsRestant(0) + 5);
+					if(tempsBonusDepart/this.diviseTempsBonus > 5) {
+						this.setTempsEcoule(this.getTempsRestant(0) + tempsBonusDepart/this.diviseTempsBonus);
+					}else { //si le temps bonus est egal ou inferieur a 5
+						this.setTempsEcoule(this.getTempsRestant(0) + 5); //le temps bonus reste a 5
 					}
 					this.getRoute().setCheckpointTouched(false);
-					//System.out.printf("Nouveau temps %d sec\n", this.getTempsRestant(1) + (int) (tempsCheckPoint/diviseTempsBonus));
-					//System.out.printf("Temps ecoule %d sec\n", this.getTempsRestant(1));
 				}
 				
+				//tout les 10 secondes le temps bonus diminue
 				this.gradTemps -= seconde;
-				//System.out.printf("gradTemps = %d\n", this.gradTemps);
 				if(this.gradTemps == 0) {
 					this.gradTemps = graduationTemps;
 					this.diviseTempsBonus += 1;
