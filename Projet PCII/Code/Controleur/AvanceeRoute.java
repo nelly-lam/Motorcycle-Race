@@ -60,14 +60,38 @@ public class AvanceeRoute extends Thread{
 					Thread.sleep(this.getSecondeAvancee());
 				}
 				
+				
+				
 				/////////////////////////////CONDITIONS DE PERTE//////////////////////////////
+				
+				/**
+				 * s'il y a collision entre la moto et les obstacles,
+				 * on arrete le Thread et on affiche la fenêtre de fin
+				 */
 				if(this.getRoute().ifCollisionObstacles()) {
 					this.setRun(false);
+					//met l'attribut finDePartie a true
+					this.getRoute().setFinDePartie(true);
 					new AffichageFin(this.getRoute(), "Vous avez touché un obstacle !");
 				}
+				
+				/**
+				 * si la vitesse de la moto est nulle,
+				 * on arrete le Thread et on affiche la fenêtre de fin
+				 */
 				if(this.getRoute().ifVitesseNulle()) {
 					this.setRun(false);
+					//met l'attribut finDePartie a true
+					this.getRoute().setFinDePartie(true);
 					new AffichageFin(this.getRoute(), "Vous êtes a l'arrêt !");
+				}
+				
+				/**
+				 * si l'attribut finDePartie est a true (mis a true par l'autre Thread),
+				 * on arrete le Thread et on affiche la fenêtre de fin
+				 */
+				if (this.getRoute().getFinDePartie()) {
+					this.setRun(false);
 				}
 
 				

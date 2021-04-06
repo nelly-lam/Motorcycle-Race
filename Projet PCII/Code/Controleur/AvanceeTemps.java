@@ -58,9 +58,23 @@ public class AvanceeTemps extends Thread{
 				
 
 				/////////////////////////////CONDITION DE PERTE//////////////////////////////
+				
+				/**
+				 * si le temps est ecoule,
+				 * on arrete le Thread et on affiche la fenêtre de fin
+				 */
 				if (this.getTempsEcoule() == 0) {
 					this.setRun(false);
+					this.getRoute().setFinDePartie(true);
 					new AffichageFin(this.getRoute(), "Le temps est écoulé !");
+				}
+				
+				/**
+				 * si l'attribut finDePartie est a true (mis a true par l'autre Thread),
+				 * on arrete le Thread et on affiche la fenêtre de fin
+				 */
+				if (this.getRoute().getFinDePartie()) {
+					this.setRun(false);
 				}
 					
 				Thread.sleep(seconde);

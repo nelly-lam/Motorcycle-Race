@@ -51,6 +51,7 @@ public class Route extends Observable{
 	private ArrayList<Checkpoint> listeCheckpoints;
 	
 	private boolean checkpointTouched;
+	private boolean finDePartie;
 	
 	
 	/****************CONSTRUCTEUR****************/
@@ -62,6 +63,7 @@ public class Route extends Observable{
 		this.listePointsG = new ArrayList<Point>();
 		this.listePointsD = new ArrayList<Point>();
 		this.checkpointTouched = false;
+		this.setFinDePartie(false);
 		
 		//Les deux premiers points de la route
 		Point departG1 = new Point(departXGauche, Vue.AffichageJeu.HAUTAFFICHAGE);
@@ -135,7 +137,11 @@ public class Route extends Observable{
 	public boolean getCheckpointTouched() {
 		return checkpointTouched;
 	}
+	public boolean getFinDePartie() { return finDePartie; }
 
+	public void setFinDePartie(boolean finDePartie) {
+		this.finDePartie = finDePartie;
+	}
 	public void setCheckpointTouched(boolean checkpointTouched) {
 		this.checkpointTouched = checkpointTouched;
 	}
@@ -665,16 +671,20 @@ public class Route extends Observable{
 	
 	
 	/**
-	 * Methode ifVitesseNulle() : renvoie true si la vitesse de la moto est a zero
+	 * Methode ifVitesseNulle() : renvoie true si la vitesse de la moto 
+	 * est inferieure ou egale a zero
 	 * @return true si vitesse = 0, false sinon
 	 * Troisieme condition de perte
 	 */
 	public boolean ifVitesseNulle() {
-		if(this.getMoto().getVitesse() == 0.) {
+		if(this.getMoto().getVitesse() <= 0.) {
 			return true;
 		}
 		return false;
 	}
+
+
+
 	
 	
 	

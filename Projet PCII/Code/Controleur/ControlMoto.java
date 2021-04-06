@@ -76,13 +76,5 @@ public class ControlMoto implements KeyListener{
 		this.ar = ar;
 	}
 	
-	public void arretJeu() {
-		if(!temps.getRun()) {
-			ar.setRun(false);
-		}
-		if(!ar.getRun()) {
-			temps.setRun(true);
-		}
-	}
 
 }
