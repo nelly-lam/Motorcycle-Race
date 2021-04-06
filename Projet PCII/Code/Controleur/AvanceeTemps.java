@@ -77,6 +77,14 @@ public class AvanceeTemps extends Thread{
 					this.setRun(false);
 				}
 					
+				/*//pour la pause
+				if(this.getRoute().getIsPaused()) {
+					this.setRun(false);
+				}else {
+					this.setRun(true);
+				}*/
+				
+				
 				Thread.sleep(seconde);
 
 			} catch (InterruptedException e) {

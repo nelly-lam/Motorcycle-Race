@@ -21,7 +21,7 @@ public class Main {
 		
 		AffichageJeu affichageJeu = new AffichageJeu(moto, route, temps, ar);
 		
-		ControlMoto controlMoto = new ControlMoto(moto, temps, ar);
+		ControlMoto controlMoto = new ControlMoto(moto, route, temps, ar);
 		affichageJeu.addKeyListener(controlMoto);
 		
 

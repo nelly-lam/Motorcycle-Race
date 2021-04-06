@@ -50,9 +50,14 @@ public class Route extends Observable{
 	private ArrayList<Point> listeObstacles;
 	private ArrayList<Checkpoint> listeCheckpoints;
 	
+	//attribut servant a dire si un point de controle a ete atteint, permet de donner un temps bonus
 	private boolean checkpointTouched;
+	
+	//attribut servant a dire si la partie est finie, permet d'arreter les threads
 	private boolean finDePartie;
 	
+	//attribut servant a dire si la partie est en pause, arrete temporairement les threads
+	private boolean isPaused;
 	
 	/****************CONSTRUCTEUR****************/
 	public Route(Moto m) {
@@ -64,6 +69,7 @@ public class Route extends Observable{
 		this.listePointsD = new ArrayList<Point>();
 		this.checkpointTouched = false;
 		this.setFinDePartie(false);
+		this.setIsPaused(false);
 		
 		//Les deux premiers points de la route
 		Point departG1 = new Point(departXGauche, Vue.AffichageJeu.HAUTAFFICHAGE);
@@ -134,11 +140,11 @@ public class Route extends Observable{
 	 * @return Point
 	 */
 	public Point getPointG(int i) { return this.listePointsG.get(i); }
-	public boolean getCheckpointTouched() {
-		return checkpointTouched;
-	}
+	public boolean getCheckpointTouched() {return checkpointTouched;}
 	public boolean getFinDePartie() { return finDePartie; }
-
+	public boolean getIsPaused() {return isPaused;}
+	
+	public void setIsPaused(boolean isPaused) {this.isPaused = isPaused;}
 	public void setFinDePartie(boolean finDePartie) {
 		this.finDePartie = finDePartie;
 	}

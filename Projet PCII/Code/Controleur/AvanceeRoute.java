@@ -93,11 +93,19 @@ public class AvanceeRoute extends Thread{
 				if (this.getRoute().getFinDePartie()) {
 					this.setRun(false);
 				}
+				
+				/*//pour la pause
+				if(this.getRoute().getIsPaused()) {
+					this.setRun(false);
+				}else {
+					this.setRun(true);
+				}*/
 
 				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			
 		}
 	}
 

@@ -4,17 +4,20 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import Modele.Moto;
+import Modele.Route;
 
 public class ControlMoto implements KeyListener{
 	
 	/****************ATTRIBUTS****************/
 	private final Moto moto;
+	private final Route route;
 	private AvanceeTemps temps;
 	private AvanceeRoute ar;
 	
 	/****************CONSTRUCTEUR****************/
-	public ControlMoto(Moto m, AvanceeTemps t, AvanceeRoute ar) {
+	public ControlMoto(Moto m, Route r, AvanceeTemps t, AvanceeRoute ar) {
 		this.moto = m;
+		this.route = r;
 		this.temps = t;
 		this.ar = ar;
 	}
@@ -22,21 +25,30 @@ public class ControlMoto implements KeyListener{
 	/****************METHODES****************/
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		//System.out.printf("on rentre dans keyPressed\n");
 		switch (e.getKeyCode()){
 		   case (KeyEvent.VK_RIGHT): // quand la touche correspond à celui de la fleche droite du clavier
-			   //System.out.printf("La moto se deplace a droite\n");
 			   this.getMoto().deplaceDroit();
 		   break;
 		   case (KeyEvent.VK_LEFT): 
 			   this.getMoto().deplaceGauche();
 		   break;
-		   case (KeyEvent.VK_ESCAPE):
+		   /*case (KeyEvent.VK_SPACE):
+			   
+			   if(!this.getRoute().getIsPaused()) { //si le jeu n'est pas en pause
+				   //this.getAvanceeTemps().setRun(false);
+				   //this.getAr().setRun(false);
+				   this.getRoute().setIsPaused(true);
+			   }else {
+				   //this.getAvanceeTemps().setRun(true);
+				   //this.getAr().setRun(true);
+				   this.getRoute().setIsPaused(false);
+			   }
+			   */
 			   /*
 			   if(!this.getTimer().getIfPause()) {
 				   this.getTimer().pause();
@@ -50,7 +62,7 @@ public class ControlMoto implements KeyListener{
 			   }
 		   break;*/
 		  }
-		//this.arretJeu();
+
 	}
 
 	@Override
@@ -59,22 +71,13 @@ public class ControlMoto implements KeyListener{
 	}
 
 	public Moto getMoto() { return moto; }
+	public Route getRoute() { return route; }
 
-	public AvanceeTemps getTimer() {
-		return temps;
-	}
-
-	public void setTimer(AvanceeTemps timer) {
-		this.temps = timer;
-	}
-
-	public AvanceeRoute getAr() {
-		return ar;
-	}
-
-	public void setAr(AvanceeRoute ar) {
-		this.ar = ar;
-	}
+	public AvanceeRoute getAr() {return ar;}
+	public void setAr(AvanceeRoute ar) {this.ar = ar;}
+	
+	public AvanceeTemps getAvanceeTemps() {return temps;}
+	public void setAvanceeTemps(AvanceeTemps timer) {this.temps = timer;}
 	
 
 }
