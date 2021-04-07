@@ -193,6 +193,7 @@ public class AffichageRoute extends JPanel implements Observer{
     	g.drawString(String.valueOf(this.getTemps().getTempsEcoule()), AffichageJeu.LARGAFFICHAGE/2+40, 23);
     }
 
+    
 	@Override
     public void update() {
         this.requestFocusInWindow();
