@@ -35,7 +35,7 @@ public class AffichageFin extends JFrame{
 		JPanel panel = new JPanel(null);
 		
 		/*
-		ImageIcon img = new ImageIcon("./Code/Images/game-over_LI.jpg");
+		ImageIcon img = new ImageIcon("./src/Images/game-over_LI.jpg");
 		img.getImage().getScaledInstance(AffichageJeu.LARGAFFICHAGE, AffichageJeu.HAUTAFFICHAGE, Image.SCALE_DEFAULT);
 		JLabel image = new JLabel(img);
 		panel.add(image);
@@ -93,7 +93,7 @@ public class AffichageFin extends JFrame{
     	g.drawString(String.valueOf(this.route.getKilometre()), AffichageJeu.LARGAFFICHAGE/2 + 30, 120);
 		*/
 		try {
-			img = ImageIO.read(new File("./Code/Images/game-over_LI.jpg")).getScaledInstance(AffichageJeu.LARGAFFICHAGE, AffichageJeu.HAUTAFFICHAGE, Image.SCALE_DEFAULT);
+			img = ImageIO.read(new File("./src/Images/game-over_LI.jpg")).getScaledInstance(AffichageJeu.LARGAFFICHAGE, AffichageJeu.HAUTAFFICHAGE, Image.SCALE_DEFAULT);
 			g.drawImage(img, 0, 0, this);
 		} catch (IOException e) {
 			e.printStackTrace();

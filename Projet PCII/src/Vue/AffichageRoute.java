@@ -94,7 +94,7 @@ public class AffichageRoute extends JPanel implements Observer{
 	 */
     public void paintMoto(Graphics g) throws IOException {
     	g.setColor(Color.blue);
-		Image img1 = ImageIO.read(new File("./Code/Images/moto.png")).getScaledInstance(30, 30, Image.SCALE_DEFAULT);
+		Image img1 = ImageIO.read(new File("./src/Images/moto.png")).getScaledInstance(30, 30, Image.SCALE_DEFAULT);
 		g.drawRect((int) this.getMoto().getHautGauche().getX(), (int) this.getMoto().getHautGauche().getY(),
 					(int) this.getMoto().getBasDroit().getX() - (int) this.getMoto().getHautGauche().getX(), (int) this.getMoto().getBasDroit().getY() - (int) this.getMoto().getHautGauche().getY());
 		g.drawImage(img1, this.getMoto().getPositionX() - 15, this.getMoto().getPositionY() - 15, this);
@@ -148,7 +148,7 @@ public class AffichageRoute extends JPanel implements Observer{
     	//g.fillRect(0, 0, AffichageJeu.LARGAFFICHAGE, Route.POSITIONHORIZON);
     	//g.drawLine( 0, Modele.Route.POSITIONHORIZON, Vue.AffichageJeu.LARGAFFICHAGE, Modele.Route.POSITIONHORIZON);
 
-		Image img = ImageIO.read(new File("./Code/Images/fuji.png")).getScaledInstance(AffichageJeu.LARGAFFICHAGE, Route.POSITIONHORIZON, Image.SCALE_DEFAULT);
+		Image img = ImageIO.read(new File("./src/Images/fuji.png")).getScaledInstance(AffichageJeu.LARGAFFICHAGE, Route.POSITIONHORIZON, Image.SCALE_DEFAULT);
 		g.drawImage(img, 0, 0, this);
     }
 
@@ -161,7 +161,7 @@ public class AffichageRoute extends JPanel implements Observer{
     	g.setColor(Color.red);
     	//Image img;
     	for(int i = 0; i < this.getRoute().getListeObstacles().size(); i++) {
-    		//img = ImageIO.read(new File("./Code/Images/cerisier.png")).getScaledInstance(30, 30, Image.SCALE_DEFAULT);
+    		//img = ImageIO.read(new File("./src/Images/cerisier.png")).getScaledInstance(30, 30, Image.SCALE_DEFAULT);
     		//g.drawImage(img, (int) this.getRoute().getListeObstacles().get(i).getX(), (int) this.getRoute().getListeObstacles().get(i).getY(), this);
     		g.drawString("X", (int) this.getRoute().getListeObstacles().get(i).getX(), (int) this.getRoute().getListeObstacles().get(i).getY());
     	}
