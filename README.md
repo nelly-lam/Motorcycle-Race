@@ -1,4 +1,4 @@
-# Projet-PCII
+# Motorcycle Race
 
 ### Présentation
 Le projet consiste à réaliser un jeu qui s’apparente à une course de moto. L’objectif du joueur est
